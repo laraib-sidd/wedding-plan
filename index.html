@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Wedding Plan 💍</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:   #1a4a2e;
+      --green2:  #225c38;
+      --gold:    #c9a84c;
+      --gold-lt: #f0d98a;
+      --ivory:   #fdf9f2;
+      --cream:   #f5ede0;
+      --text:    #2c2c2c;
+      --muted:   #7a6e5f;
+      --white:   #ffffff;
+      --sidebar-w: 270px;
+      --radius:  12px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--ivory);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--green);
+      position: fixed;
+      top: 0; left: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      transition: transform .3s ease;
+    }
+    .sidebar-header {
+      padding: 32px 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      text-align: center;
+    }
+    .sidebar-header .crescent { font-size: 2rem; margin-bottom: 6px; }
+    .sidebar-header h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold-lt);
+      font-size: 1.2rem;
+      line-height: 1.3;
+    }
+    .sidebar-header p { color: rgba(255,255,255,.55); font-size: .75rem; margin-top: 4px; }
+
+    /* Progress bar in sidebar */
+    .sidebar-progress { padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .sidebar-progress label { color: rgba(255,255,255,.6); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
+    .prog-track { background: rgba(255,255,255,.15); border-radius: 99px; height: 6px; margin-top: 6px; }
+    .prog-fill { background: var(--gold); border-radius: 99px; height: 6px; width: 0%; transition: width .5s ease; }
+    .prog-pct { color: var(--gold-lt); font-size: .8rem; margin-top: 4px; }
+
+    nav { padding: 16px 0; flex: 1; overflow-y: auto; }
+    nav a {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 24px;
+      color: rgba(255,255,255,.7);
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all .2s;
+      cursor: pointer;
+    }
+    nav a:hover { background: rgba(255,255,255,.07); color: #fff; }
+    nav a.active { background: rgba(201,168,76,.15); color: var(--gold-lt); border-left-color: var(--gold); }
+    nav a .nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+    /* Hamburger */
+    #hamburger {
+      display: none;
+      position: fixed; top: 14px; left: 14px;
+      z-index: 200;
+      background: var(--green);
+      border: none; border-radius: 8px;
+      padding: 8px 10px; cursor: pointer;
+      font-size: 1.3rem; color: var(--gold-lt);
+    }
+    #overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 90;
+    }
+
+    /* ── Main Content ── */
+    #main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 40px 48px;
+      max-width: 960px;
+    }
+
+    /* ── Section Pages ── */
+    .page { display: none; animation: fadeIn .3s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: none; } }
+
+    /* ── Hero Banner ── */
+    .hero {
+      background: linear-gradient(135deg, var(--green) 0%, var(--green2) 100%);
+      border-radius: var(--radius);
+      padding: 40px 40px;
+      color: white;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '☽';
+      position: absolute; right: 32px; top: 50%; transform: translateY(-50%);
+      font-size: 6rem; opacity: .08;
+    }
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold-lt);
+    }
+    .hero p { margin-top: 8px; opacity: .75; font-size: .95rem; }
+
+    /* ── Dashboard Cards ── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .dash-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all .2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .dash-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+    .dash-card .dc-icon { font-size: 2rem; margin-bottom: 8px; }
+    .dash-card h3 { font-size: .88rem; font-weight: 600; color: var(--green); }
+    .dash-card .dc-prog { font-size: .75rem; color: var(--muted); margin-top: 4px; }
+    .dash-card .mini-bar { background: var(--cream); border-radius: 99px; height: 4px; margin-top: 8px; }
+    .dash-card .mini-fill { background: var(--gold); border-radius: 99px; height: 4px; transition: width .5s; }
+
+    /* ── Timeline ── */
+    .timeline { display: flex; gap: 0; margin-bottom: 32px; overflow-x: auto; padding-bottom: 4px; }
+    .tl-item {
+      flex: 1; min-width: 140px;
+      display: flex; flex-direction: column; align-items: center;
+      position: relative;
+    }
+    .tl-item:not(:last-child)::after {
+      content: '';
+      position: absolute; top: 20px; left: 50%;
+      width: 100%; height: 2px;
+      background: var(--gold); opacity: .3;
+    }
+    .tl-dot {
+      width: 40px; height: 40px;
+      background: var(--green); color: var(--gold-lt);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700; z-index: 1;
+      border: 2px solid var(--gold);
+    }
+    .tl-label { font-size: .78rem; font-weight: 600; color: var(--green); margin-top: 8px; text-align: center; }
+    .tl-sub { font-size: .7rem; color: var(--muted); text-align: center; margin-top: 2px; }
+
+    /* ── Section heading ── */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+    .section-subtitle { color: var(--muted); font-size: .88rem; margin-bottom: 24px; }
+
+    /* ── Content Cards ── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+      border-left: 4px solid var(--gold);
+    }
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--green);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card h3 span { font-size: 1.2rem; }
+
+    /* ── Tables ── */
+    .tbl { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    .tbl th { background: var(--green); color: var(--gold-lt); padding: 10px 14px; text-align: left; font-weight: 600; }
+    .tbl th:first-child { border-radius: 8px 0 0 0; }
+    .tbl th:last-child { border-radius: 0 8px 0 0; }
+    .tbl td { padding: 9px 14px; border-bottom: 1px solid #f0e8d8; }
+    .tbl tr:last-child td { border-bottom: none; }
+    .tbl tr:hover td { background: var(--cream); }
+
+    /* ── Checklists ── */
+    .checklist { list-style: none; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0e8d8;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity .2s;
+      font-size: .88rem;
+      line-height: 1.4;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li .cb {
+      width: 18px; height: 18px; min-width: 18px;
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+      transition: all .2s;
+      background: white;
+    }
+    .checklist li.done .cb { background: var(--green); border-color: var(--green); }
+    .checklist li.done .cb::after { content: '✓'; color: white; font-size: .7rem; font-weight: 700; }
+    .checklist li.done .cb-text { text-decoration: line-through; color: var(--muted); }
+
+    /* ── Islamic quote ── */
+    .quote-block {
+      background: linear-gradient(135deg, var(--green), var(--green2));
+      color: white;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      font-style: italic;
+      font-size: .9rem;
+      line-height: 1.7;
+      border-left: none;
+    }
+    .quote-block strong { color: var(--gold-lt); font-style: normal; display: block; margin-top: 6px; font-size: .78rem; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px; border-radius: 99px;
+      font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+    }
+    .badge-green { background: #e8f4ed; color: var(--green); }
+    .badge-gold  { background: #fef8e7; color: #9a7a1e; }
+    .badge-red   { background: #fdecea; color: #c0392b; }
+
+    /* ── Attire grid ── */
+    .attire-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .attire-card {
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      border: 2px solid var(--cream);
+    }
+    .attire-card .af-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .attire-card h4 { font-size: .9rem; font-weight: 600; color: var(--green); }
+    .attire-card p { font-size: .78rem; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+    .attire-card .color-dots { display: flex; gap: 6px; justify-content: center; margin-top: 10px; }
+    .color-dot { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
+
+    /* ── Honeymoon cards ── */
+    .dest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .dest-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 2px solid var(--cream);
+      transition: all .2s;
+    }
+    .dest-card:hover { border-color: var(--gold); box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+    .dest-card .dest-icon { font-size: 1.6rem; margin-bottom: 8px; }
+    .dest-card h4 { font-weight: 700; color: var(--green); font-size: .95rem; }
+    .dest-card .dest-vibe { font-size: .78rem; color: var(--muted); margin: 4px 0 8px; }
+    .dest-card .dest-stars { color: var(--gold); font-size: .85rem; }
+    .dest-card .dest-cost { font-size: .78rem; color: var(--green); font-weight: 600; margin-top: 6px; }
+
+    /* ── Grooming timeline ── */
+    .groom-tl { position: relative; padding-left: 28px; }
+    .groom-tl::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: var(--gold); opacity: .35; }
+    .groom-tl-item { position: relative; margin-bottom: 20px; }
+    .groom-tl-item::before {
+      content: ''; position: absolute; left: -26px; top: 4px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--gold); border: 2px solid var(--white);
+    }
+    .groom-tl-item h4 { font-size: .85rem; font-weight: 600; color: var(--green); }
+    .groom-tl-item ul { margin-top: 6px; padding-left: 16px; font-size: .82rem; color: var(--muted); line-height: 1.8; }
+
+    /* ── Scroll to top ── */
+    #scrolltop {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--green); color: var(--gold-lt);
+      border: none; border-radius: 50%;
+      width: 42px; height: 42px; font-size: 1.1rem;
+      cursor: pointer; display: none; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,.2);
+      z-index: 50;
+    }
+    #scrolltop.show { display: flex; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+      #hamburger { display: flex; align-items: center; }
+      #overlay.show { display: block; }
+      #main { margin-left: 0; padding: 24px 20px; padding-top: 64px; }
+      .hero { padding: 28px 24px; }
+      .hero h2 { font-size: 1.5rem; }
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hamburger button -->
+<button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <div class="sidebar-header">
+    <div class="crescent">☽</div>
+    <h1>Wedding Planner</h1>
+    <p>Delhi Muslim Wedding · 2026</p>
+  </div>
+  <div class="sidebar-progress">
+    <label>Overall Progress</label>
+    <div class="prog-track"><div class="prog-fill" id="globalFill"></div></div>
+    <div class="prog-pct" id="globalPct">0% complete</div>
+  </div>
+  <nav>
+    <a class="active" onclick="showPage('dashboard')" data-page="dashboard">
+      <span class="nav-icon">🏠</span> Dashboard
+    </a>
+    <a onclick="showPage('mangni')" data-page="mangni">
+      <span class="nav-icon">💍</span> Mangni (Engagement)
+    </a>
+    <a onclick="showPage('mehndi')" data-page="mehndi">
+      <span class="nav-icon">🌿</span> Mehndi Ceremony
+    </a>
+    <a onclick="showPage('nikah')" data-page="nikah">
+      <span class="nav-icon">🕌</span> Nikah Ceremony
+    </a>
+    <a onclick="showPage('walima')" data-page="walima">
+      <span class="nav-icon">🍽️</span> Walima Reception
+    </a>
+    <a onclick="showPage('attire')" data-page="attire">
+      <span class="nav-icon">👔</span> Attire & Grooming
+    </a>
+    <a onclick="showPage('honeymoon')" data-page="honeymoon">
+      <span class="nav-icon">🌙</span> Honeymoon
+    </a>
+    <a onclick="showPage('legal')" data-page="legal">
+      <span class="nav-icon">⚖️</span> Legal & Emergency Kit
+    </a>
+  </nav>
+</aside>
+
+<!-- Main -->
+<main id="main">
+
+  <!-- ────────── DASHBOARD ────────── -->
+  <section class="page active" id="page-dashboard">
+    <div class="hero">
+      <h2>My Wedding Planning Hub</h2>
+      <p>Traditional Islamic · Modern Touch · Delhi, 2026 · Budget: ₹15 Lakhs</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="dash-card" onclick="showPage('mangni')">
+        <div class="dc-icon">💍</div>
+        <h3>Mangni</h3>
+        <div class="dc-prog" id="dc-mangni">0/5 tasks</div>
+        <div class="mini-bar"><div class="mini-fill" id="mf-mangni" style="width:0%"></div></div>
+      </div>
+      <div class="dash-card" onclick="showPage('mehndi')">
+        <div class="dc-icon">🌿</div>
+        <h3>Mehndi</h3>
+        <div class="dc-prog" id="dc-mehndi">0/5 tasks</div>
+        <div class="mini-bar"><div class="mini-fill" id="mf-mehndi" style="width:0%"></div></div>
+      </div>
+      <div class="dash-card" onclick="showPage('nikah')">
+        <div class="dc-icon">🕌</div>
+        <h3>Nikah</h3>
+        <div class="dc-prog" id="dc-nikah">0/7 tasks</div>
+        <div class="mini-bar"><div class="mini-fill" id="mf-nikah" style="width:0%"></div></div>
+      </div>
+      <div class="dash-card" onclick="showPage('walima')">
+        <div class="dc-icon">🍽️</div>
+        <h3>Walima</h3>
+        <div class="dc-prog" id="dc-walima">0/6 tasks</div>
+        <div class="mini-bar"><div class="mini-fill" id="mf-walima" style="width:0%"></div></div>
+      </div>
+      <div class="dash-card" onclick="showPage('attire')">
+        <div class="dc-icon">👔</div>
+        <h3>Attire</h3>
+        <div class="dc-prog" id="dc-attire">0/8 tasks</div>
+        <div class="mini-bar"><div class="mini-fill" id="mf-attire" style="width:0%"></div></div>
+      </div>
+      <div class="dash-card" onclick="showPage('honeymoon')">
+        <div class="dc-icon">🌙</div>
+        <h3>Honeymoon</h3>
+        <div class="dc-prog" id="dc-honeymoon">0/6 tasks</div>
+        <div class="mini-bar"><div class="mini-fill" id="mf-honeymoon" style="width:0%"></div></div>
+      </div>
+      <div class="dash-card" onclick="showPage('legal')">
+        <div class="dc-icon">⚖️</div>
+        <h3>Legal</h3>
+        <div class="dc-prog" id="dc-legal">0/5 tasks</div>
+        <div class="mini-bar"><div class="mini-fill" id="mf-legal" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span>📅</span> Wedding Functions Timeline</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot">1</div>
+          <div class="tl-label">Mangni</div>
+          <div class="tl-sub">Engagement<br>3–6 months before</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">2</div>
+          <div class="tl-label">Mehndi</div>
+          <div class="tl-sub">1–2 days<br>before Nikah</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">3</div>
+          <div class="tl-label">Nikah</div>
+          <div class="tl-sub">Main wedding<br>ceremony</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">4</div>
+          <div class="tl-label">Walima</div>
+          <div class="tl-sub">1–3 days<br>after Nikah</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">☽</div>
+          <div class="tl-label">Honeymoon</div>
+          <div class="tl-sub">After Walima<br>TBD</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      "And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy."
+      <strong>— Surah Ar-Rum (30:21)</strong>
+    </div>
+  </section>
+
+  <!-- ────────── MANGNI ────────── -->
+  <section class="page" id="page-mangni">
+    <div class="hero">
+      <h2>💍 Mangni (Engagement)</h2>
+      <p>Formal announcement of commitment · Ring exchange · Both families together</p>
+    </div>
+
+    <div class="card">
+      <h3><span>📋</span> Ceremony Order</h3>
+      <ol style="padding-left:20px; font-size:.88rem; line-height:2;">
+        <li>Welcome and seating of both families</li>
+        <li>Recitation of Surah Al-Fatiha and dua for barakah</li>
+        <li>Exchange of rings (groom places ring on bride's finger)</li>
+        <li>Sweets / mithai distributed to guests</li>
+        <li>Family photographs</li>
+        <li>Dinner / refreshments</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3><span>✅</span> Groom's Checklist</h3>
+      <ul class="checklist" id="cl-mangni">
+        <li data-id="m1"><div class="cb"></div><span class="cb-text">Select the engagement ring (consult bride's preference)</span></li>
+        <li data-id="m2"><div class="cb"></div><span class="cb-text">Confirm Mangni date with both families</span></li>
+        <li data-id="m3"><div class="cb"></div><span class="cb-text">Choose and purchase Mangni outfit</span></li>
+        <li data-id="m4"><div class="cb"></div><span class="cb-text">Prepare a short speech or dua for the ceremony</span></li>
+        <li data-id="m5"><div class="cb"></div><span class="cb-text">Coordinate gifts or mithai to bring from groom's side</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span>💰</span> Budget Breakdown</h3>
+      <table class="tbl">
+        <thead><tr><th>Item</th><th>Estimated Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Engagement ring</td><td>₹20,000 – ₹80,000</td></tr>
+          <tr><td>Groom's outfit (kurta)</td><td>₹5,000 – ₹20,000</td></tr>
+          <tr><td>Groom-side gifts / mithai</td><td>₹5,000 – ₹15,000</td></tr>
+          <tr><td>Photography</td><td>₹10,000 – ₹25,000</td></tr>
+          <tr><td><strong>Subtotal</strong></td><td><strong>~₹40,000 – ₹1,40,000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3><span>⏱️</span> Day-Of Timeline</h3>
+      <table class="tbl">
+        <thead><tr><th>Time</th><th>Activity</th></tr></thead>
+        <tbody>
+          <tr><td>4:00 PM</td><td>Groom gets dressed and ready</td></tr>
+          <tr><td>5:00 PM</td><td>Groom's family departs for venue</td></tr>
+          <tr><td>5:30 PM</td><td>Guests arrive, both families seated</td></tr>
+          <tr><td>6:00 PM</td><td>Dua and Fatiha recitation</td></tr>
+          <tr><td>6:15 PM</td><td>Ring exchange</td></tr>
+          <tr><td>6:30 PM</td><td>Sweets distributed, photographs</td></tr>
+          <tr><td>7:00 PM</td><td>Dinner served</td></tr>
+          <tr><td>9:00 PM</td><td>Event closes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ────────── MEHNDI ────────── -->
+  <section class="page" id="page-mehndi">
+    <div class="hero">
+      <h2>🌿 Mehndi Ceremony</h2>
+      <p>Joyful pre-wedding celebration · Henna · Music · Colour</p>
+    </div>
+
+    <div class="card">
+      <h3><span>✅</span> Groom's Checklist</h3>
+      <ul class="checklist" id="cl-mehndi">
+        <li data-id="mh1"><div class="cb"></div><span class="cb-text">Decide if you'll host a separate groom-side mehndi function</span></li>
+        <li data-id="mh2"><div class="cb"></div><span class="cb-text">Choose and purchase Mehndi outfit (colourful and fun)</span></li>
+        <li data-id="mh3"><div class="cb"></div><span class="cb-text">Arrange entertainment: qawwali group, dhol, or nasheed playlist</span></li>
+        <li data-id="mh4"><div class="cb"></div><span class="cb-text">Plan your entry — dramatic with dhol, or low-key?</span></li>
+        <li data-id="mh5"><div class="cb"></div><span class="cb-text">Get mehndi design done on your hand (bride's name)</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span>🎵</span> Entertainment Options</h3>
+      <table class="tbl">
+        <thead><tr><th>Option</th><th>Cost Estimate</th></tr></thead>
+        <tbody>
+          <tr><td>Qawwali group (3–5 performers)</td><td>₹15,000 – ₹40,000</td></tr>
+          <tr><td>Dhol player</td><td>₹3,000 – ₹8,000</td></tr>
+          <tr><td>Nasheed / acapella artist</td><td>₹10,000 – ₹30,000</td></tr>
+          <tr><td>Curated playlist (DIY)</td><td>₹0</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3><span>💰</span> Budget Breakdown</h3>
+      <table class="tbl">
+        <thead><tr><th>Item</th><th>Estimated Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Mehndi artist (bride + bridesmaids)</td><td>₹5,000 – ₹20,000</td></tr>
+          <tr><td>Groom's mehndi</td><td>₹500 – ₹2,000</td></tr>
+          <tr><td>Entertainment</td><td>₹10,000 – ₹40,000</td></tr>
+          <tr><td>Groom's outfit</td><td>₹5,000 – ₹15,000</td></tr>
+          <tr><td><strong>Subtotal</strong></td><td><strong>~₹20,000 – ₹77,000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3><span>⏱️</span> Day-Of Timeline</h3>
+      <table class="tbl">
+        <thead><tr><th>Time</th><th>Activity</th></tr></thead>
+        <tbody>
+          <tr><td>3:00 PM</td><td>Venue setup and decor ready</td></tr>
+          <tr><td>4:00 PM</td><td>Guests arrive, music begins</td></tr>
+          <tr><td>4:30 PM</td><td>Bride seated, mehndi application begins</td></tr>
+          <tr><td>6:00 PM</td><td>Groom arrives (if attending bride's side)</td></tr>
+          <tr><td>6:30 PM</td><td>Groom's mehndi applied</td></tr>
+          <tr><td>7:00 PM</td><td>Dinner served</td></tr>
+          <tr><td>9:00 PM</td><td>Event wraps up</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ────────── NIKAH ────────── -->
+  <section class="page" id="page-nikah">
+    <div class="hero">
+      <h2>🕌 Nikah Ceremony</h2>
+      <p>The sacred Islamic marriage contract · The most important function</p>
+    </div>
+
+    <div class="quote-block">
+      "Our Lord, grant us from among our wives and offspring comfort to our eyes and make us an example for the righteous."
+      <strong>— Surah Al-Furqan (25:74)</strong>
+    </div>
+
+    <div class="card">
+      <h3><span>🔑</span> Islamic Requirements</h3>
+      <table class="tbl">
+        <thead><tr><th>Requirement</th><th>Details</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Qazi</strong></td><td>Qualified Islamic scholar to officiate</td><td><span class="badge badge-gold">To Book</span></td></tr>
+          <tr><td><strong>2 Witnesses</strong></td><td>2 adult Muslim male witnesses (Shahidain)</td><td><span class="badge badge-gold">To Confirm</span></td></tr>
+          <tr><td><strong>Mahr</strong></td><td>Obligatory gift/dowry from groom to bride</td><td><span class="badge badge-gold">To Agree</span></td></tr>
+          <tr><td><strong>Wali</strong></td><td>Bride's guardian must be present or consent</td><td><span class="badge badge-gold">To Confirm</span></td></tr>
+          <tr><td><strong>Ijab & Qubool</strong></td><td>Verbal offer and acceptance in one sitting</td><td><span class="badge badge-green">Sunnah</span></td></tr>
+          <tr><td><strong>Nikah Nama</strong></td><td>Written contract signed by all parties</td><td><span class="badge badge-gold">Qazi Prepares</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3><span>📋</span> Ceremony Order</h3>
+      <ol style="padding-left:20px; font-size:.88rem; line-height:2.1;">
+        <li>Groom seated with witnesses and Qazi</li>
+        <li>Recitation of <strong>Khutbah-tun-Nikah</strong> (Islamic marriage sermon)</li>
+        <li>Recitation of Surah Al-Fatiha, Al-Baqarah (2:187), An-Nisa (4:1), Al-Ahzab (33:70–71)</li>
+        <li>Qazi asks groom: <strong>Ijab</strong> — offer of marriage</li>
+        <li>Bride accepts through her Wakil: <strong>Qubool</strong> — said 3 times</li>
+        <li>Mahr formally announced and agreed</li>
+        <li><strong>Nikah Nama</strong> signed by groom, Wakil, and witnesses</li>
+        <li>Dua for the couple by the Qazi</li>
+        <li>Distribution of <strong>dates</strong> (Sunnah of the Prophet ﷺ)</li>
+        <li>Congratulations from family and guests</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3><span>✅</span> Groom's Checklist</h3>
+      <ul class="checklist" id="cl-nikah">
+        <li data-id="n1"><div class="cb"></div><span class="cb-text">Book a Qazi — contact local mosque or Delhi Waqf Board</span></li>
+        <li data-id="n2"><div class="cb"></div><span class="cb-text">Confirm Mahr amount with bride and both families</span></li>
+        <li data-id="n3"><div class="cb"></div><span class="cb-text">Confirm 2 adult Muslim male witnesses</span></li>
+        <li data-id="n4"><div class="cb"></div><span class="cb-text">Bring a pen for signing the Nikah Nama</span></li>
+        <li data-id="n5"><div class="cb"></div><span class="cb-text">Carry dates to distribute after the Nikah</span></li>
+        <li data-id="n6"><div class="cb"></div><span class="cb-text">Carry original Aadhaar card for documentation</span></li>
+        <li data-id="n7"><div class="cb"></div><span class="cb-text">Prepare heartfelt words for your bride after the Nikah</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span>🤲</span> Dua for the Groom</h3>
+      <div style="background:var(--cream); border-radius:8px; padding:16px; font-size:.88rem; line-height:1.8; font-style:italic; color:var(--green);">
+        "Allahumma inni as'aluka khayraha wa khayra ma jabaltaha alayhi, wa a'udhu bika min sharriha wa sharri ma jabaltaha alayh"
+        <div style="margin-top:8px; font-style:normal; color:var(--muted); font-size:.78rem;">
+          O Allah, I ask You for the good in her and the good of her nature, and I seek refuge in You from the evil in her and the evil of her nature.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span>⏱️</span> Nikah Day Timeline</h3>
+      <table class="tbl">
+        <thead><tr><th>Time</th><th>Activity</th></tr></thead>
+        <tbody>
+          <tr><td>6:00 AM</td><td>Fajr prayer, light breakfast</td></tr>
+          <tr><td>7:00 AM</td><td>Grooming and ittar applied</td></tr>
+          <tr><td>8:00 AM</td><td>Get dressed in sherwani with family</td></tr>
+          <tr><td>9:00 AM</td><td>Pre-Nikah family photos</td></tr>
+          <tr><td>10:00 AM</td><td>Depart for venue</td></tr>
+          <tr><td>11:00 AM</td><td>Qazi begins Khutbah</td></tr>
+          <tr><td>11:30 AM</td><td>Ijab-Qubool, Nikah Nama signed</td></tr>
+          <tr><td>12:00 PM</td><td>Dua, dates distributed, congratulations</td></tr>
+          <tr><td>12:30 PM</td><td>Couple and family photos</td></tr>
+          <tr><td>3:00 PM</td><td>Rukhsati (bride's departure)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ────────── WALIMA ────────── -->
+  <section class="page" id="page-walima">
+    <div class="hero">
+      <h2>🍽️ Walima Reception</h2>
+      <p>Sunnah feast · Celebration with community · Within 3 days of Nikah</p>
+    </div>
+
+    <div class="quote-block">
+      "Hold a Walima, even if it is with a single sheep."
+      <strong>— Sahih Bukhari</strong>
+    </div>
+
+    <div class="card">
+      <h3><span>✅</span> Groom's Checklist</h3>
+      <ul class="checklist" id="cl-walima">
+        <li data-id="w1"><div class="cb"></div><span class="cb-text">Confirm Walima date — within 3 days of Nikah</span></li>
+        <li data-id="w2"><div class="cb"></div><span class="cb-text">Confirm venue for Walima</span></li>
+        <li data-id="w3"><div class="cb"></div><span class="cb-text">Choose Walima outfit (suit or elegant kurta)</span></li>
+        <li data-id="w4"><div class="cb"></div><span class="cb-text">Plan couple's entry — nasheed or simple walk-in</span></li>
+        <li data-id="w5"><div class="cb"></div><span class="cb-text">Finalise menu with family</span></li>
+        <li data-id="w6"><div class="cb"></div><span class="cb-text">Prepare a short thank-you speech for guests</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span>🍛</span> Recommended Menu</h3>
+      <table class="tbl">
+        <thead><tr><th>Course</th><th>Dishes</th></tr></thead>
+        <tbody>
+          <tr><td>Starters</td><td>Seekh kebab, Shami kebab, Chicken tikka</td></tr>
+          <tr><td>Main Course</td><td>Mutton/Chicken Biryani ⭐, Dal makhani, Naan, Raita</td></tr>
+          <tr><td>Desserts</td><td>Shahi tukda, Phirni, Gulab jamun, Sewaiyan</td></tr>
+          <tr><td>Drinks</td><td>Sharbat, Rooh Afza, Fresh lime soda, Cold drinks</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3><span>⏱️</span> Walima Day Timeline</h3>
+      <table class="tbl">
+        <thead><tr><th>Time</th><th>Activity</th></tr></thead>
+        <tbody>
+          <tr><td>11:00 AM</td><td>Venue setup complete</td></tr>
+          <tr><td>12:00 PM</td><td>Groom gets dressed and ready</td></tr>
+          <tr><td>12:30 PM</td><td>Couple's grand entry</td></tr>
+          <tr><td>12:45 PM</td><td>Bismillah, dua, meal begins</td></tr>
+          <tr><td>1:30 PM</td><td>Family and guest photographs</td></tr>
+          <tr><td>2:30 PM</td><td>Well-wishers greet the couple</td></tr>
+          <tr><td>3:30 PM</td><td>Dua by elder / scholar</td></tr>
+          <tr><td>4:00 PM</td><td>Event wraps, couple departs</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ────────── ATTIRE ────────── -->
+  <section class="page" id="page-attire">
+    <div class="hero">
+      <h2>👔 Attire & Grooming</h2>
+      <p>Groom's complete look guide for all 4 functions · Delhi shopping guide</p>
+    </div>
+
+    <div class="card">
+      <h3><span>👗</span> Outfit by Function</h3>
+      <div class="attire-grid">
+        <div class="attire-card">
+          <div class="af-icon">💍</div>
+          <h4>Mangni</h4>
+          <p>Smart kurta-pyjama or Indo-western</p>
+          <div class="color-dots">
+            <div class="color-dot" style="background:#f5f0e8" title="Ivory"></div>
+            <div class="color-dot" style="background:#87CEEB" title="Sky Blue"></div>
+            <div class="color-dot" style="background:#98c49b" title="Mint Green"></div>
+          </div>
+        </div>
+        <div class="attire-card">
+          <div class="af-icon">🌿</div>
+          <h4>Mehndi</h4>
+          <p>Colourful festive kurta — go bright!</p>
+          <div class="color-dots">
+            <div class="color-dot" style="background:#ffd700" title="Yellow"></div>
+            <div class="color-dot" style="background:#ff8c00" title="Orange"></div>
+            <div class="color-dot" style="background:#40E0D0" title="Turquoise"></div>
+            <div class="color-dot" style="background:#90EE90" title="Lime"></div>
+          </div>
+        </div>
+        <div class="attire-card" style="border-color: var(--gold);">
+          <div class="af-icon">🕌</div>
+          <h4>Nikah ⭐</h4>
+          <p>Embroidered sherwani + sehra + jutti</p>
+          <div class="color-dots">
+            <div class="color-dot" style="background:#fffff0" title="Ivory"></div>
+            <div class="color-dot" style="background:#f5f0e8" title="Off-white"></div>
+            <div class="color-dot" style="background:#c9a84c" title="Gold"></div>
+          </div>
+        </div>
+        <div class="attire-card">
+          <div class="af-icon">🍽️</div>
+          <h4>Walima</h4>
+          <p>Premium suit or elegant kurta</p>
+          <div class="color-dots">
+            <div class="color-dot" style="background:#36454F" title="Charcoal"></div>
+            <div class="color-dot" style="background:#003153" title="Navy"></div>
+            <div class="color-dot" style="background:#4169E1" title="Royal Blue"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span>✅</span> Attire Shopping Checklist</h3>
+      <ul class="checklist" id="cl-attire">
+        <li data-id="a1"><div class="cb"></div><span class="cb-text">Mangni kurta purchased and pressed</span></li>
+        <li data-id="a2"><div class="cb"></div><span class="cb-text">Mehndi kurta purchased (colourful)</span></li>
+        <li data-id="a3"><div class="cb"></div><span class="cb-text">Nikah sherwani booked for fitting (8 weeks before)</span></li>
+        <li data-id="a4"><div class="cb"></div><span class="cb-text">Nikah accessories ordered: sehra, kalgi, jutti</span></li>
+        <li data-id="a5"><div class="cb"></div><span class="cb-text">Ittar (natural alcohol-free perfume) purchased</span></li>
+        <li data-id="a6"><div class="cb"></div><span class="cb-text">Walima suit / kurta decided and purchased</span></li>
+        <li data-id="a7"><div class="cb"></div><span class="cb-text">All outfits collected at least 3 days before each function</span></li>
+        <li data-id="a8"><div class="cb"></div><span class="cb-text">All outfits steamed/pressed and hung ready</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span>🪒</span> Personal Grooming Timeline</h3>
+      <div class="groom-tl">
+        <div class="groom-tl-item">
+          <h4>3 Months Before</h4>
+          <ul>
+            <li>Start daily moisturiser + SPF 30 sunscreen</li>
+            <li>Drink 2.5–3L water daily</li>
+            <li>Decide on wedding haircut style</li>
+          </ul>
+        </div>
+        <div class="groom-tl-item">
+          <h4>2 Months Before</h4>
+          <ul>
+            <li>Professional facial / skin treatment</li>
+            <li>Monthly haircut shape-up</li>
+          </ul>
+        </div>
+        <div class="groom-tl-item">
+          <h4>1 Month Before</h4>
+          <ul>
+            <li>Second facial / deep clean</li>
+            <li>Begin using under-eye cream</li>
+            <li>Teeth whitening if desired</li>
+          </ul>
+        </div>
+        <div class="groom-tl-item">
+          <h4>2 Weeks Before</h4>
+          <ul>
+            <li>Final shape-up haircut — lock in your wedding look</li>
+            <li>Precise beard trim and line-up</li>
+            <li>Manicure and pedicure</li>
+          </ul>
+        </div>
+        <div class="groom-tl-item">
+          <h4>Nikah Morning</h4>
+          <ul>
+            <li>Fajr prayer — begin with barakah</li>
+            <li>Light breakfast</li>
+            <li>Shower, apply ittar</li>
+            <li>Style hair, get dressed with family</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────── HONEYMOON ────────── -->
+  <section class="page" id="page-honeymoon">
+    <div class="hero">
+      <h2>🌙 Honeymoon Guide</h2>
+      <p>Curated destinations for a Muslim couple from Delhi · Budget: ₹1.5L – ₹3.5L</p>
+    </div>
+
+    <div class="card">
+      <h3><span>🇮🇳</span> Domestic Destinations</h3>
+      <div class="dest-grid">
+        <div class="dest-card">
+          <div class="dest-icon">🏔️</div>
+          <h4>Kashmir</h4>
+          <div class="dest-vibe">Romantic mountains, Dal Lake houseboats</div>
+          <div class="dest-stars">★★★★★ Halal</div>
+          <div class="dest-cost">₹60,000 – ₹1,20,000 · Best: Apr–Oct</div>
+        </div>
+        <div class="dest-card">
+          <div class="dest-icon">🌴</div>
+          <h4>Kerala</h4>
+          <div class="dest-vibe">Backwaters, houseboat stays, lush hills</div>
+          <div class="dest-stars">★★★★★ Halal</div>
+          <div class="dest-cost">₹70,000 – ₹1,30,000 · Best: Oct–Feb</div>
+        </div>
+        <div class="dest-card">
+          <div class="dest-icon">🏖️</div>
+          <h4>Goa</h4>
+          <div class="dest-vibe">Beaches, sunsets, vibrant energy</div>
+          <div class="dest-stars">★★★ Halal</div>
+          <div class="dest-cost">₹60,000 – ₹1,10,000 · Best: Nov–Feb</div>
+        </div>
+        <div class="dest-card">
+          <div class="dest-icon">🏰</div>
+          <h4>Udaipur</h4>
+          <div class="dest-vibe">Royal palaces, romantic lakes, heritage</div>
+          <div class="dest-stars">★★★ Halal</div>
+          <div class="dest-cost">₹50,000 – ₹90,000 · Best: Oct–Mar</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span>🌍</span> International Destinations</h3>
+      <div class="dest-grid">
+        <div class="dest-card" style="border-color: var(--gold);">
+          <div class="dest-icon">🇹🇷</div>
+          <h4>Turkey ⭐ Top Pick</h4>
+          <div class="dest-vibe">Islamic heritage + balloon rides in Cappadocia</div>
+          <div class="dest-stars">★★★★★ Halal</div>
+          <div class="dest-cost">₹1,50,000 – ₹2,50,000 · e-Visa ~₹4,000</div>
+        </div>
+        <div class="dest-card">
+          <div class="dest-icon">🏝️</div>
+          <h4>Maldives</h4>
+          <div class="dest-vibe">Overwater villas, crystal lagoons, seclusion</div>
+          <div class="dest-stars">★★★★★ Halal</div>
+          <div class="dest-cost">₹2,00,000 – ₹4,00,000 · Visa on arrival</div>
+        </div>
+        <div class="dest-card">
+          <div class="dest-icon">🇦🇪</div>
+          <h4>Dubai</h4>
+          <div class="dest-vibe">Luxury skyline, desert safari, easy travel</div>
+          <div class="dest-stars">★★★★★ Halal</div>
+          <div class="dest-cost">₹1,20,000 – ₹2,00,000 · e-Visa ~₹6,000</div>
+        </div>
+        <div class="dest-card">
+          <div class="dest-icon">🇲🇾</div>
+          <h4>Malaysia ⭐ Best Value</h4>
+          <div class="dest-vibe">Modern city + tropical island, best halal food</div>
+          <div class="dest-stars">★★★★★ Halal</div>
+          <div class="dest-cost">₹1,00,000 – ₹1,80,000 · Visa-Free</div>
+        </div>
+        <div class="dest-card">
+          <div class="dest-icon">🇦🇿</div>
+          <h4>Azerbaijan</h4>
+          <div class="dest-vibe">European charm, fire temples, hidden gem</div>
+          <div class="dest-stars">★★★★ Halal</div>
+          <div class="dest-cost">₹90,000 – ₹1,50,000 · e-Visa ~₹3,500</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span>✅</span> Honeymoon Checklist</h3>
+      <ul class="checklist" id="cl-honeymoon">
+        <li data-id="h1"><div class="cb"></div><span class="cb-text">Decide: domestic or international?</span></li>
+        <li data-id="h2"><div class="cb"></div><span class="cb-text">Choose destination based on Nikah date and season</span></li>
+        <li data-id="h3"><div class="cb"></div><span class="cb-text">Check passport validity (6+ months remaining from travel date)</span></li>
+        <li data-id="h4"><div class="cb"></div><span class="cb-text">Apply for visa if needed (Turkey, Dubai, Azerbaijan)</span></li>
+        <li data-id="h5"><div class="cb"></div><span class="cb-text">Book flights — 2–3 months in advance for best prices</span></li>
+        <li data-id="h6"><div class="cb"></div><span class="cb-text">Book hotel / resort with honeymoon package</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ────────── LEGAL ────────── -->
+  <section class="page" id="page-legal">
+    <div class="hero">
+      <h2>⚖️ Legal Tasks & Emergency Kit</h2>
+      <p>Nikah Nama · Civil registration · Day-of vendor contacts · Emergency bag</p>
+    </div>
+
+    <div class="card">
+      <h3><span>📜</span> Legal Checklist</h3>
+      <ul class="checklist" id="cl-legal">
+        <li data-id="l1"><div class="cb"></div><span class="cb-text">Collect the original signed Nikah Nama from the Qazi</span></li>
+        <li data-id="l2"><div class="cb"></div><span class="cb-text">Make 2–3 photocopies of Nikah Nama — store safely</span></li>
+        <li data-id="l3"><div class="cb"></div><span class="cb-text">Visit SDM office for civil marriage certificate (Special Marriage Act)</span></li>
+        <li data-id="l4"><div class="cb"></div><span class="cb-text">Update nominees on bank accounts and insurance policies</span></li>
+        <li data-id="l5"><div class="cb"></div><span class="cb-text">Add spouse to health insurance policy</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span>🎒</span> Groom's Wedding Day Emergency Kit</h3>
+      <p style="font-size:.82rem; color:var(--muted); margin-bottom:14px;">Pack this bag and assign it to your best man / trusted brother to carry on the day.</p>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; font-size:.82rem;">
+        <div style="background:var(--cream); border-radius:8px; padding:12px;">
+          <strong style="color:var(--green); font-size:.78rem;">👔 OUTFIT FIXES</strong>
+          <ul style="margin-top:8px; padding-left:16px; line-height:1.9; color:var(--muted);">
+            <li>Safety pins (6–8)</li>
+            <li>Mini sewing kit</li>
+            <li>Double-sided fashion tape</li>
+            <li>Stain remover pen</li>
+          </ul>
+        </div>
+        <div style="background:var(--cream); border-radius:8px; padding:12px;">
+          <strong style="color:var(--green); font-size:.78rem;">💊 HEALTH</strong>
+          <ul style="margin-top:8px; padding-left:16px; line-height:1.9; color:var(--muted);">
+            <li>Pain reliever (paracetamol)</li>
+            <li>Antacid tablet</li>
+            <li>Band-aids / blister pads</li>
+            <li>Deodorant (travel size)</li>
+          </ul>
+        </div>
+        <div style="background:var(--cream); border-radius:8px; padding:12px;">
+          <strong style="color:var(--green); font-size:.78rem;">📱 TECH & DOCS</strong>
+          <ul style="margin-top:8px; padding-left:16px; line-height:1.9; color:var(--muted);">
+            <li>Phone charger + power bank</li>
+            <li>Printed timeline (each function)</li>
+            <li>Printed vendor contact list</li>
+            <li>Nikah Nama copy + Aadhaar</li>
+            <li>Pen (to sign Nikah Nama)</li>
+          </ul>
+        </div>
+        <div style="background:var(--cream); border-radius:8px; padding:12px;">
+          <strong style="color:var(--green); font-size:.78rem;">🍫 ESSENTIALS</strong>
+          <ul style="margin-top:8px; padding-left:16px; line-height:1.9; color:var(--muted);">
+            <li>Breath mints / mouth spray</li>
+            <li>Blotting papers (shine control)</li>
+            <li>Travel-size cologne / ittar</li>
+            <li>Snacks — dates, energy bars</li>
+            <li>Water bottle</li>
+            <li>Cash ₹5,000–₹10,000 (tips)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span>📞</span> Vendor Contact Sheet</h3>
+      <table class="tbl">
+        <thead><tr><th>Vendor</th><th>Name</th><th>Phone</th></tr></thead>
+        <tbody>
+          <tr><td>Qazi</td><td><em style="color:var(--muted)">Fill in</em></td><td><em style="color:var(--muted)">Fill in</em></td></tr>
+          <tr><td>Photographer</td><td><em style="color:var(--muted)">Fill in</em></td><td><em style="color:var(--muted)">Fill in</em></td></tr>
+          <tr><td>Videographer</td><td><em style="color:var(--muted)">Fill in</em></td><td><em style="color:var(--muted)">Fill in</em></td></tr>
+          <tr><td>Caterer</td><td><em style="color:var(--muted)">Fill in</em></td><td><em style="color:var(--muted)">Fill in</em></td></tr>
+          <tr><td>Decorator</td><td><em style="color:var(--muted)">Fill in</em></td><td><em style="color:var(--muted)">Fill in</em></td></tr>
+          <tr><td>Venue Manager</td><td><em style="color:var(--muted)">Fill in</em></td><td><em style="color:var(--muted)">Fill in</em></td></tr>
+          <tr><td>Transport / Driver</td><td><em style="color:var(--muted)">Fill in</em></td><td><em style="color:var(--muted)">Fill in</em></td></tr>
+          <tr><td>Best Man / Coordinator</td><td><em style="color:var(--muted)">Fill in</em></td><td><em style="color:var(--muted)">Fill in</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<!-- Scroll to top -->
+<button id="scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // ── Navigation ──
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelector(`nav a[data-page="${id}"]`).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeSidebar();
+  }
+
+  // ── Sidebar mobile ──
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  // ── Checklists ──
+  const CHECKLISTS = {
+    mangni:   { id: 'cl-mangni',   total: 5,  dc: 'dc-mangni',   mf: 'mf-mangni' },
+    mehndi:   { id: 'cl-mehndi',   total: 5,  dc: 'dc-mehndi',   mf: 'mf-mehndi' },
+    nikah:    { id: 'cl-nikah',    total: 7,  dc: 'dc-nikah',    mf: 'mf-nikah' },
+    walima:   { id: 'cl-walima',   total: 6,  dc: 'dc-walima',   mf: 'mf-walima' },
+    attire:   { id: 'cl-attire',   total: 8,  dc: 'dc-attire',   mf: 'mf-attire' },
+    honeymoon:{ id: 'cl-honeymoon',total: 6,  dc: 'dc-honeymoon',mf: 'mf-honeymoon' },
+    legal:    { id: 'cl-legal',    total: 5,  dc: 'dc-legal',    mf: 'mf-legal' },
+  };
+
+  function loadChecks() {
+    const saved = JSON.parse(localStorage.getItem('weddingChecks') || '{}');
+    Object.keys(CHECKLISTS).forEach(key => {
+      const cfg = CHECKLISTS[key];
+      const ul = document.getElementById(cfg.id);
+      if (!ul) return;
+      ul.querySelectorAll('li').forEach(li => {
+        const id = li.dataset.id;
+        if (saved[id]) li.classList.add('done');
+        li.addEventListener('click', () => toggleCheck(li, id));
+      });
+    });
+    updateProgress();
+  }
+
+  function toggleCheck(li, id) {
+    li.classList.toggle('done');
+    const saved = JSON.parse(localStorage.getItem('weddingChecks') || '{}');
+    if (li.classList.contains('done')) saved[id] = true; else delete saved[id];
+    localStorage.setItem('weddingChecks', JSON.stringify(saved));
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const saved = JSON.parse(localStorage.getItem('weddingChecks') || '{}');
+    let totalAll = 0, doneAll = 0;
+    Object.keys(CHECKLISTS).forEach(key => {
+      const cfg = CHECKLISTS[key];
+      const ul = document.getElementById(cfg.id);
+      if (!ul) return;
+      const items = ul.querySelectorAll('li');
+      const done = ul.querySelectorAll('li.done').length;
+      const total = items.length;
+      totalAll += total; doneAll += done;
+      const pct = total ? Math.round(done / total * 100) : 0;
+      document.getElementById(cfg.dc).textContent = `${done}/${total} tasks`;
+      document.getElementById(cfg.mf).style.width = pct + '%';
+    });
+    const gPct = totalAll ? Math.round(doneAll / totalAll * 100) : 0;
+    document.getElementById('globalFill').style.width = gPct + '%';
+    document.getElementById('globalPct').textContent = gPct + '% complete';
+  }
+
+  // ── Scroll to top ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrolltop').classList.toggle('show', window.scrollY > 300);
+  });
+
+  // ── Init ──
+  loadChecks();
+</script>
+</body>
+</html>
