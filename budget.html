@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Budget — Laraib & Musharraf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0f1f3d;
+      --navy-light: #1a2f52;
+      --rose: #c9846a;
+      --rose-light: #e8a98e;
+      --rose-pale: #f5e6df;
+      --gold: #d4a853;
+      --gold-light: #f0c97a;
+      --green: #3a7d5f;
+      --green-light: #4a9e79;
+      --red: #c0392b;
+      --red-light: #e74c3c;
+      --bg: #faf8f5;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b6b8a;
+      --border: #e8e0d8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: white;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9846a' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    header .back-link {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    header .back-link:hover { color: var(--rose-light); }
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      position: relative;
+    }
+    header p {
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      position: relative;
+    }
+    .header-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0 0.5rem;
+      position: relative;
+    }
+    .header-divider::before, .header-divider::after {
+      content: '';
+      width: 60px;
+      height: 1px;
+      background: var(--rose);
+      opacity: 0.6;
+    }
+    .header-divider span { color: var(--rose); font-size: 1.2rem; }
+
+    /* ── Alert Banner ── */
+    .alert-banner {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      border-left: 4px solid var(--gold);
+      margin: 1.5rem;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+    }
+    .alert-banner .icon { font-size: 1.3rem; flex-shrink: 0; }
+    .alert-banner strong { color: #7d5a00; display: block; margin-bottom: 0.25rem; }
+    .alert-banner p { color: #5a4000; line-height: 1.5; }
+
+    /* ── Main Layout ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* ── Summary Cards ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .summary-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .summary-card .label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .summary-card .amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .summary-card.budget .amount { color: var(--green); }
+    .summary-card.total .amount { color: var(--red); }
+    .summary-card.gap .amount { color: var(--red); }
+    .summary-card .sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ── Budget Meter ── */
+    .budget-meter {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .budget-meter h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 1.25rem;
+    }
+    .meter-track {
+      background: #f0ede8;
+      border-radius: 50px;
+      height: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .meter-fill {
+      height: 100%;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      transition: width 1s ease;
+    }
+    .meter-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+    .meter-label .over { color: var(--red); font-weight: 600; }
+
+    /* ── Event Breakdown ── */
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--navy);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .event-card {
+      background: var(--card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .event-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .event-header .event-name {
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .event-header .event-total {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .event-body { padding: 0 1.25rem 1.25rem; }
+    .event-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 0.88rem;
+    }
+    .event-item:last-child { border-bottom: none; }
+    .event-item .item-name { color: var(--text-muted); }
+    .event-item .item-amount { font-weight: 600; color: var(--text); }
+    .event-item .item-range { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.1rem; }
+    .item-note {
+      font-size: 0.75rem;
+      color: var(--rose);
+      background: var(--rose-pale);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+    }
+
+    /* Event colour themes */
+    .ev-mangni .event-header { background: linear-gradient(135deg, #e8f4f0, #d1ece3); }
+    .ev-mangni .event-header .event-name { color: var(--green); }
+    .ev-mangni .event-header .event-total { color: var(--green); }
+
+    .ev-mehndi .event-header { background: linear-gradient(135deg, #fff8e1, #ffedb3); }
+    .ev-mehndi .event-header .event-name { color: #7d5a00; }
+    .ev-mehndi .event-header .event-total { color: #7d5a00; }
+
+    .ev-nikah .event-header { background: linear-gradient(135deg, #e8eaf6, #c5cae9); }
+    .ev-nikah .event-header .event-name { color: #3949ab; }
+    .ev-nikah .event-header .event-total { color: #3949ab; }
+
+    .ev-walima .event-header { background: linear-gradient(135deg, #fce4ec, #f8bbd0); }
+    .ev-walima .event-header .event-name { color: #c2185b; }
+    .ev-walima .event-header .event-total { color: #c2185b; }
+
+    .ev-cross .event-header { background: linear-gradient(135deg, #f3e5f5, #e1bee7); }
+    .ev-cross .event-header .event-name { color: #7b1fa2; }
+    .ev-cross .event-header .event-total { color: #7b1fa2; }
+
+    /* ── Horizontal Bar Chart ── */
+    .chart-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .chart-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 1.25rem;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 130px 1fr 100px;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+    .bar-label { font-size: 0.85rem; font-weight: 500; text-align: right; }
+    .bar-track { background: #f0ede8; border-radius: 50px; height: 20px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 50px; transition: width 1s ease; }
+    .bar-amount { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+    /* Budget line on chart */
+    .budget-line-wrapper { position: relative; }
+    .budget-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--rose);
+      opacity: 0.7;
+      z-index: 2;
+    }
+    .budget-line-label {
+      position: absolute;
+      top: -20px;
+      font-size: 0.7rem;
+      color: var(--rose);
+      font-weight: 600;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+
+    /* ── Category Pie (CSS) ── */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+    .cat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: #f9f8f6;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .cat-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .cat-info .cat-name { font-size: 0.85rem; font-weight: 500; }
+    .cat-info .cat-amt { font-size: 0.8rem; color: var(--text-muted); }
+    .cat-pct {
+      margin-left: auto;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* ── Savings Tips ── */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .tip-card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 1.1rem;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      font-size: 0.88rem;
+    }
+    .tip-card .tip-title {
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .tip-card p { color: var(--text-muted); line-height: 1.5; }
+    .tip-saving {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--green);
+      background: #e8f5e9;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--rose); text-decoration: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .bar-row { grid-template-columns: 90px 1fr 80px; }
+      .bar-label { font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════════════ -->
+<header>
+  <a href="index.html" class="back-link">← Back to Planner</a>
+  <div class="header-divider"><span>💍</span></div>
+  <h1>Wedding Budget Planner</h1>
+  <p>Laraib Siddiqui & Musharraf Jahan · Delhi · Dec 2025</p>
+</header>
+
+<!-- ══ OVER-BUDGET ALERT ═══════════════════════════════════════════ -->
+<div class="alert-banner" style="max-width:1100px;margin:1.5rem auto;">
+  <span class="icon">⚠️</span>
+  <div>
+    <strong>Budget Alert — Current estimates exceed your ₹15L target</strong>
+    <p>Based on your inputs, the mid-range estimate is <strong>~₹22.5 lakh</strong> — about ₹7.5L over budget. The biggest drivers are Walima food (₹6–7L for 1000 guests) and Nikah venue + gold. Scroll down for savings tips to bring it closer to ₹15L.</p>
+  </div>
+</div>
+
+<!-- ══ MAIN ════════════════════════════════════════════════════════ -->
+<main>
+
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <div class="summary-card budget">
+      <div class="label">Your Budget</div>
+      <div class="amount">₹15L</div>
+      <div class="sub">₹15,00,000 target</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Low Estimate</div>
+      <div class="amount" style="color:var(--gold)">₹20.8L</div>
+      <div class="sub">Best case scenario</div>
+    </div>
+    <div class="summary-card total">
+      <div class="label">Mid Estimate</div>
+      <div class="amount">₹22.5L</div>
+      <div class="sub">Most likely outcome</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">High Estimate</div>
+      <div class="amount" style="color:#8b0000">₹24.1L</div>
+      <div class="sub">If everything costs more</div>
+    </div>
+    <div class="summary-card gap">
+      <div class="label">Budget Gap</div>
+      <div class="amount">₹7.5L</div>
+      <div class="sub">Extra needed at mid estimate</div>
+    </div>
+  </div>
+
+  <!-- Budget Meter -->
+  <div class="budget-meter">
+    <h2>📊 Budget Utilisation</h2>
+    <div class="budget-line-wrapper">
+      <div class="meter-track" id="meterTrack">
+        <div class="meter-fill" id="meterFill" style="width:0%"></div>
+      </div>
+      <div class="budget-line" id="budgetLine" style="left:66.5%">
+        <span class="budget-line-label">₹15L budget</span>
+      </div>
+    </div>
+    <div class="meter-label">
+      <span>₹0</span>
+      <span>Mid estimate: ₹22.5L</span>
+      <span class="over">150% of budget used</span>
+    </div>
+  </div>
+
+  <!-- Horizontal Bar Chart -->
+  <div class="chart-card">
+    <h2>📈 Spend by Event</h2>
+    <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1.25rem;">Mid estimate per event. Red line = your ₹15L total budget.</p>
+
+    <div id="barChart"></div>
+  </div>
+
+  <!-- Event Breakdown -->
+  <div class="section-title">Event-by-Event Breakdown</div>
+
+  <div class="events-grid">
+
+    <!-- Mangni -->
+    <div class="event-card ev-mangni">
+      <div class="event-header">
+        <div class="event-name">🌸 Mangni / Engagement <span style="font-size:0.78rem;opacity:0.7">Oct 3</span></div>
+        <div class="event-total">₹2.1–2.6L</div>
+      </div>
+      <div class="event-body">
+        <div class="event-item">
+          <div>
+            <div class="item-name">God bharai ceremony</div>
+          </div>
+          <div>
+            <div class="item-amount">₹75,000</div>
+            <div class="item-range">Range: ₹50k–₹1L</div>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Engagement gift (ring/gift set)</div>
+          <div class="item-amount">₹1,00,000</div>
+        </div>
+        <div class="event-item">
+          <div>
+            <div class="item-name">Clothes (groom + bride + family)</div>
+            <div style="font-size:0.75rem;color:var(--text-muted)">5k + 5k + 3k + 5k</div>
+          </div>
+          <div class="item-amount">₹18,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Bus rental (baraat/guests)</div>
+          <div class="item-amount">₹25,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Flowers / minor decor <span class="item-note">suggested</span></div>
+          <div class="item-amount">₹15,000</div>
+        </div>
+        <div class="event-item" style="font-weight:700;font-size:0.9rem">
+          <div>Subtotal</div>
+          <div style="color:var(--green)">~₹2,33,000</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Haldi + Mehndi -->
+    <div class="event-card ev-mehndi">
+      <div class="event-header">
+        <div class="event-name">🌿 Haldi + Mehndi</div>
+        <div class="event-total">₹1L</div>
+      </div>
+      <div class="event-body">
+        <div class="event-item">
+          <div class="item-name">Mehndi artist (bride + guests)</div>
+          <div class="item-amount">₹30,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Haldi ceremony supplies</div>
+          <div class="item-amount">₹15,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Decor (flowers, drapes, props)</div>
+          <div class="item-amount">₹35,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Music / DJ / Dhol <span class="item-note">suggested</span></div>
+          <div class="item-amount">₹10,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Snacks &amp; refreshments</div>
+          <div class="item-amount">₹10,000</div>
+        </div>
+        <div class="event-item" style="font-weight:700;font-size:0.9rem">
+          <div>Subtotal</div>
+          <div style="color:#7d5a00">~₹1,00,000</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nikah -->
+    <div class="event-card ev-nikah">
+      <div class="event-header">
+        <div class="event-name">🕌 Nikah <span style="font-size:0.78rem;opacity:0.7">Dec 26</span></div>
+        <div class="event-total">₹7.75–8.25L</div>
+      </div>
+      <div class="event-body">
+        <div class="event-item">
+          <div class="item-name">Venue + decoration (Dabur)</div>
+          <div class="item-amount">₹3,00,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Bride's outfit (from groom side)</div>
+          <div class="item-amount">₹1,00,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Groom's sherwani / personal clothes</div>
+          <div class="item-amount">₹1,50,000</div>
+        </div>
+        <div class="event-item">
+          <div>
+            <div class="item-name">Gold jewellery (25g, 22K)</div>
+            <div style="font-size:0.75rem;color:var(--text-muted)">~₹7,800/g × 25g</div>
+          </div>
+          <div class="item-amount">₹1,95,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Bus rental</div>
+          <div class="item-amount">₹25,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Qazi fees + Nikah Nama <span class="item-note">suggested</span></div>
+          <div class="item-amount">₹5,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Nikah food / refreshments <span class="item-note">suggested</span></div>
+          <div class="item-amount">₹25,000</div>
+        </div>
+        <div class="event-item" style="font-weight:700;font-size:0.9rem">
+          <div>Subtotal</div>
+          <div style="color:#3949ab">~₹8,00,000</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Walima -->
+    <div class="event-card ev-walima">
+      <div class="event-header">
+        <div class="event-name">🎊 Walima <span style="font-size:0.78rem;opacity:0.7">Dec 27</span></div>
+        <div class="event-total">₹8.45–9.1L</div>
+      </div>
+      <div class="event-body">
+        <div class="event-item">
+          <div>
+            <div class="item-name">Food (1,000 guests)</div>
+            <div style="font-size:0.75rem;color:var(--text-muted)">~₹650/plate × 1000</div>
+          </div>
+          <div>
+            <div class="item-amount">₹6,50,000</div>
+            <div class="item-range">Range: ₹6–7L</div>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Band / shehnai / entertainment</div>
+          <div class="item-amount">₹1,00,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Joota churai fund 👟</div>
+          <div class="item-amount">₹20,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Gift to bride's side (eidi/gifts)</div>
+          <div class="item-amount">₹50,000</div>
+        </div>
+        <div class="event-item">
+          <div>
+            <div class="item-name">Car / baraat vehicle</div>
+          </div>
+          <div>
+            <div class="item-amount">₹32,500</div>
+            <div class="item-range">Range: ₹25–40k</div>
+          </div>
+        </div>
+        <div class="event-item" style="font-weight:700;font-size:0.9rem">
+          <div>Subtotal</div>
+          <div style="color:#c2185b">~₹8,52,500</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cross-event -->
+    <div class="event-card ev-cross">
+      <div class="event-header">
+        <div class="event-name">📸 Across All Events</div>
+        <div class="event-total">₹3L</div>
+      </div>
+      <div class="event-body">
+        <div class="event-item">
+          <div class="item-name">Photographer (all functions)</div>
+          <div class="item-amount">₹1,00,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Running / miscellaneous expenses</div>
+          <div class="item-amount">₹2,00,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Videographer <span class="item-note">suggested</span></div>
+          <div class="item-amount">₹50,000</div>
+        </div>
+        <div class="event-item">
+          <div class="item-name">Invitations / printing <span class="item-note">suggested</span></div>
+          <div class="item-amount">₹15,000</div>
+        </div>
+        <div class="event-item" style="font-weight:700;font-size:0.9rem">
+          <div>Subtotal</div>
+          <div style="color:#7b1fa2">~₹3,65,000</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end events-grid -->
+
+  <!-- Category breakdown -->
+  <div class="section-title">Spend by Category</div>
+  <div class="chart-card">
+    <h2>🗂️ Category Breakdown (Mid Estimate)</h2>
+    <div class="category-grid">
+      <div class="cat-item">
+        <div class="cat-dot" style="background:#4e79a7"></div>
+        <div class="cat-info">
+          <div class="cat-name">Food & Catering</div>
+          <div class="cat-amt">₹6,75,000</div>
+        </div>
+        <div class="cat-pct">30%</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-dot" style="background:#f28e2b"></div>
+        <div class="cat-info">
+          <div class="cat-name">Venue & Decor</div>
+          <div class="cat-amt">₹3,15,000</div>
+        </div>
+        <div class="cat-pct">14%</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-dot" style="background:#d4a853"></div>
+        <div class="cat-info">
+          <div class="cat-name">Gold Jewellery</div>
+          <div class="cat-amt">₹1,95,000</div>
+        </div>
+        <div class="cat-pct">9%</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-dot" style="background:#e15759"></div>
+        <div class="cat-info">
+          <div class="cat-name">Clothes (all)</div>
+          <div class="cat-amt">₹2,68,000</div>
+        </div>
+        <div class="cat-pct">12%</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-dot" style="background:#76b7b2"></div>
+        <div class="cat-info">
+          <div class="cat-name">Gifts & Ceremonies</div>
+          <div class="cat-amt">₹2,25,000</div>
+        </div>
+        <div class="cat-pct">10%</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-dot" style="background:#59a14f"></div>
+        <div class="cat-info">
+          <div class="cat-name">Entertainment & Band</div>
+          <div class="cat-amt">₹1,10,000</div>
+        </div>
+        <div class="cat-pct">5%</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-dot" style="background:#af7aa1"></div>
+        <div class="cat-info">
+          <div class="cat-name">Photography & Video</div>
+          <div class="cat-amt">₹1,50,000</div>
+        </div>
+        <div class="cat-pct">7%</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-dot" style="background:#ff9da7"></div>
+        <div class="cat-info">
+          <div class="cat-name">Transport (buses + car)</div>
+          <div class="cat-amt">₹82,500</div>
+        </div>
+        <div class="cat-pct">4%</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-dot" style="background:#9c755f"></div>
+        <div class="cat-info">
+          <div class="cat-name">Running / Misc</div>
+          <div class="cat-amt">₹2,00,000</div>
+        </div>
+        <div class="cat-pct">9%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Savings Tips -->
+  <div class="section-title">💡 Ways to Cut ~₹5–7L</div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-title">🍽️ Reduce Walima guest list</div>
+      <p>Going from 1,000 to 600 guests saves ₹2.5–3L on food alone. Biggest single lever.</p>
+      <span class="tip-saving">Save ₹2.5–3L</span>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">🏛️ Negotiate venue package</div>
+      <p>Bundle Nikah + Walima at the same venue (Dabur) for a package deal. Ask for 15–20% off for booking both days.</p>
+      <span class="tip-saving">Save ₹40–60k</span>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">👗 Simplify groom clothes</div>
+      <p>₹1.5L for personal clothes is high. A good sherwani for Nikah + simple kurta for other events keeps it under ₹80k.</p>
+      <span class="tip-saving">Save ₹60–70k</span>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">📷 Book early / bundle photographer</div>
+      <p>Book 3–4 months out and negotiate 1 photographer covering all 4 events for ₹75k instead of ₹1L.</p>
+      <span class="tip-saving">Save ₹25k</span>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">🪙 Fewer gold grams</div>
+      <p>15g instead of 25g at 22K saves ~₹78k while still being a meaningful mahr / gift.</p>
+      <span class="tip-saving">Save ₹78k</span>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">🎵 Skip band / opt for DJ</div>
+      <p>A DJ at ₹25–30k gives the same energy as a ₹1L band for Walima.</p>
+      <span class="tip-saving">Save ₹70–75k</span>
+    </div>
+  </div>
+
+  <!-- Revised budget if tips applied -->
+  <div class="budget-meter" style="border-left:3px solid var(--green)">
+    <h2>✅ Revised Budget (if savings tips applied)</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.25rem">
+      <div style="text-align:center">
+        <div style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.4rem">Original estimate</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--red)">₹22.5L</div>
+      </div>
+      <div style="text-align:center;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--text-muted)">→</div>
+      <div style="text-align:center">
+        <div style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.4rem">After savings</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold)">₹16–17L</div>
+      </div>
+      <div style="text-align:center;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--text-muted)">→</div>
+      <div style="text-align:center">
+        <div style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.4rem">Your budget</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--green)">₹15L</div>
+      </div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6">
+      Applying the guest reduction + DJ swap + streamlined clothes brings you within ₹1–2L of your target. The remaining gap can come from relatives' contributions or a small family loan.
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  Made with ❤️ for Laraib & Musharraf · <a href="index.html">← Back to Wedding Planner</a>
+</footer>
+
+<script>
+  // Animate budget meter
+  window.addEventListener('load', () => {
+    // Budget = 15L, estimate = 22.5L, so fill = 22.5/22.5 = 100% (full bar)
+    // Budget line = 15/22.5 = 66.67%
+    setTimeout(() => {
+      const fill = document.getElementById('meterFill');
+      fill.style.width = '100%';
+      fill.style.background = 'linear-gradient(90deg, #3a7d5f 0%, #d4a853 66%, #c0392b 100%)';
+    }, 200);
+
+    // Draw horizontal bar chart
+    const events = [
+      { label: 'Food & Catering', amount: 675000, color: '#4e79a7' },
+      { label: 'Nikah Venue', amount: 300000, color: '#e15759' },
+      { label: 'Clothes (all)', amount: 268000, color: '#f28e2b' },
+      { label: 'Running / Misc', amount: 200000, color: '#9c755f' },
+      { label: 'Gold (25g 22K)', amount: 195000, color: '#d4a853' },
+      { label: 'Gifts & Ceremonies', amount: 225000, color: '#76b7b2' },
+      { label: 'Photography+Video', amount: 150000, color: '#af7aa1' },
+      { label: 'Band / Music', amount: 110000, color: '#59a14f' },
+      { label: 'Transport', amount: 82500, color: '#ff9da7' },
+    ];
+
+    const maxAmt = 700000;
+    const budgetPct = (1500000 / (events.reduce((s, e) => s + e.amount, 0))) * 100;
+    const chart = document.getElementById('barChart');
+
+    events.forEach(ev => {
+      const pct = Math.min((ev.amount / maxAmt) * 100, 100);
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML = `
+        <div class="bar-label">${ev.label}</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:0%;background:${ev.color}" data-pct="${pct}"></div>
+        </div>
+        <div class="bar-amount">₹${(ev.amount/100000).toFixed(1)}L</div>
+      `;
+      chart.appendChild(row);
+    });
+
+    // Animate bars
+    setTimeout(() => {
+      document.querySelectorAll('.bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.pct + '%';
+      });
+    }, 300);
+  });
+</script>
+
+</body>
+</html>
