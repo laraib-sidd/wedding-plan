@@ -501,9 +501,20 @@
       <span class="nav-icon">🇻🇳</span> Vietnam Itinerary
       <span class="nav-pct" id="np-vietnam">0%</span>
     </a>
+    <div class="nav-divider">Guests</div>
+    <a onclick="go('guests')" data-page="guests">
+      <span class="nav-icon">📋</span> Guest List
+      <span class="nav-lock">🔒</span>
+    </a>
+    <div class="nav-divider">Vendors</div>
+    <a onclick="go('vendors')" data-page="vendors">
+      <span class="nav-icon">📞</span> Vendor Contacts
+      <span class="nav-lock">🔒</span>
+    </a>
     <div class="nav-divider">Finance</div>
     <a href="budget.html" style="text-decoration:none;">
       <span class="nav-icon">💰</span> Budget Planner
+      <span class="nav-lock">🔒</span>
     </a>
   </nav>
 </aside>
@@ -1225,6 +1236,23 @@
 
   <div class="card">
     <div class="card-header"><div class="ch-icon">📞</div><h3>Vendor Contact Sheet</h3></div>
+    <p style="font-size:.8rem; color:var(--muted);">Moved to its own locked tab — see <a href="#" onclick="go('vendors'); return false;">🔒 Vendor Contacts</a> in the sidebar.</p>
+  </div>
+
+</section>
+
+<!-- ═══════════ VENDOR CONTACTS (locked) ═══════════ -->
+<section class="page" id="page-vendors">
+  <div class="lock-gate">
+  <div class="hero">
+    <div class="hero-eyebrow">Vendors</div>
+    <h2>Vendor Contact Sheet 📞</h2>
+    <p>Names and numbers for every function day — print this for the emergency kit.</p>
+    <div class="hero-badge">🔒 Locked</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="ch-icon">📞</div><h3>Vendor Contact Sheet</h3></div>
     <p style="font-size:.8rem; color:var(--muted); margin-bottom:14px;">Fill in and print this for each function day.</p>
     <div class="tbl-wrap"><table class="tbl">
       <thead><tr><th>Vendor</th><th>Name</th><th>Phone</th></tr></thead>
@@ -1240,7 +1268,32 @@
       </tbody>
     </table></div>
   </div>
+  </div><!-- /.lock-gate -->
+</section>
 
+<!-- ═══════════ GUEST LIST (locked) ═══════════ -->
+<section class="page" id="page-guests">
+  <div class="lock-gate">
+  <div class="hero">
+    <div class="hero-eyebrow">Guests</div>
+    <h2>Guest List &amp; RSVP 📋</h2>
+    <p>Track who's invited, RSVP status, and dietary needs.</p>
+    <div class="hero-badge">🔒 Locked</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="ch-icon">📋</div>
+      <h3>Guest List</h3>
+      <div class="ch-progress"><strong id="guest-count">0</strong><span> guests</span></div>
+    </div>
+    <div class="tbl-wrap"><table class="tbl" id="guest-table">
+      <thead><tr><th>Name</th><th>Relationship</th><th>Contact</th><th>RSVP</th><th>Dietary</th><th>Table #</th><th></th></tr></thead>
+      <tbody id="guest-tbody"></tbody>
+    </table></div>
+    <button type="button" id="guest-add" style="margin-top:14px; padding:8px 16px; border:none; border-radius:8px; background:var(--navy); color:#fff; font-weight:600; cursor:pointer; font-size:.85rem;">+ Add Guest</button>
+  </div>
+  </div><!-- /.lock-gate -->
 </section>
 
 <!-- ═══════════ VIETNAM ═══════════ -->
@@ -1641,10 +1694,75 @@
     document.getElementById('scrolltop').classList.toggle('show', window.scrollY > 300);
   });
 
+  // ── Guest list ──
+  const GUEST_KEY = 'lm-guests';
+
+  function loadGuests() {
+    return JSON.parse(localStorage.getItem(GUEST_KEY) || '[]');
+  }
+
+  function saveGuests(guests) {
+    localStorage.setItem(GUEST_KEY, JSON.stringify(guests));
+  }
+
+  function renderGuests() {
+    const guests = loadGuests();
+    const tbody = document.getElementById('guest-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    guests.forEach((g, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input class="vendor-input" data-field="name" value="${g.name || ''}" /></td>
+        <td><input class="vendor-input" data-field="relationship" value="${g.relationship || ''}" /></td>
+        <td><input class="vendor-input" data-field="contact" value="${g.contact || ''}" /></td>
+        <td>
+          <select class="vendor-input" data-field="rsvp">
+            <option value="Pending" ${g.rsvp === 'Pending' || !g.rsvp ? 'selected' : ''}>Pending</option>
+            <option value="Yes" ${g.rsvp === 'Yes' ? 'selected' : ''}>Yes</option>
+            <option value="No" ${g.rsvp === 'No' ? 'selected' : ''}>No</option>
+          </select>
+        </td>
+        <td><input class="vendor-input" data-field="dietary" value="${g.dietary || ''}" /></td>
+        <td><input class="vendor-input" data-field="table" value="${g.table || ''}" style="width:60px;" /></td>
+        <td><button type="button" class="guest-remove" title="Remove" style="border:none;background:none;cursor:pointer;color:var(--rose);font-size:1rem;">✕</button></td>`;
+      tr.querySelectorAll('[data-field]').forEach((el) => {
+        el.addEventListener('input', () => {
+          guests[i][el.dataset.field] = el.value;
+          saveGuests(guests);
+        });
+        el.addEventListener('change', () => {
+          guests[i][el.dataset.field] = el.value;
+          saveGuests(guests);
+        });
+      });
+      tr.querySelector('.guest-remove').addEventListener('click', () => {
+        guests.splice(i, 1);
+        saveGuests(guests);
+        renderGuests();
+      });
+      tbody.appendChild(tr);
+    });
+    const count = document.getElementById('guest-count');
+    if (count) count.textContent = guests.length;
+  }
+
+  const guestAddBtn = document.getElementById('guest-add');
+  if (guestAddBtn) {
+    guestAddBtn.addEventListener('click', () => {
+      const guests = loadGuests();
+      guests.push({ name: '', relationship: '', contact: '', rsvp: 'Pending', dietary: '', table: '' });
+      saveGuests(guests);
+      renderGuests();
+    });
+  }
+
   // ── Init ──
   loadAll();
   updateCountdowns();
   setInterval(updateCountdowns, 60000);
+  renderGuests();
 </script>
+<script src="lock.js"></script>
 </body>
 </html>
