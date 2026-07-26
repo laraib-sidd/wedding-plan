@@ -358,8 +358,10 @@
       padding: 20px; border: 2px solid var(--border);
       transition: all .2s; position: relative;
     }
+    .dest-card { cursor: pointer; }
     .dest-card:hover { border-color: var(--rose); box-shadow: var(--shadow); transform: translateY(-2px); }
     .dest-card.top-pick { border-color: var(--gold); }
+    .dest-card.risk { border-color: #c0392b; border-style: dashed; }
     .dest-top-badge {
       position: absolute; top: -1px; right: 16px;
       background: linear-gradient(135deg, var(--rose), var(--gold));
@@ -378,6 +380,28 @@
     .tag-halal  { background: #e8f5ee; color: #1a6e3e; }
     .tag-visa   { background: #e8edf5; color: var(--navy2); }
     .tag-budget { background: #fdf0eb; color: #9a4a2e; }
+
+    /* ─── DESTINATION DETAIL CARDS ─── */
+    .detail-card { scroll-margin-top: 20px; }
+    .detail-photo { width: 100%; max-height: 320px; object-fit: cover; border-radius: 12px; margin-bottom: 14px; }
+    .detail-meta { font-size: .76rem; color: var(--muted); margin-bottom: 14px; }
+    .detail-meta a { color: var(--rose); font-weight: 600; text-decoration: none; }
+    .detail-meta a:hover { text-decoration: underline; }
+    .yt-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #c0392b; color: #fff !important; font-weight: 600;
+      padding: 6px 14px; border-radius: 99px; font-size: .76rem;
+      text-decoration: none !important; margin-bottom: 14px;
+    }
+    .yt-btn:hover { background: #a93226; }
+    .signature-box {
+      background: var(--rose-pale); border-radius: 10px; padding: 12px 16px;
+      font-size: .82rem; margin: 14px 0; border-left: 3px solid var(--rose);
+    }
+    .cost-tbl td:last-child { text-align: right; font-weight: 600; }
+    .cost-tbl tr.total-row td { font-weight: 700; color: var(--navy); border-top: 2px solid var(--border); }
+    .detail-nav-back { font-size: .78rem; color: var(--muted); text-decoration: none; display: inline-block; margin-bottom: 8px; }
+    .detail-nav-back:hover { color: var(--rose); }
 
     /* ─── GROOMING TIMELINE ─── */
     .gtl { position: relative; padding-left: 32px; }
@@ -495,11 +519,6 @@
     <a onclick="go('legal')" data-page="legal">
       <span class="nav-icon">⚖️</span> Legal & Kit
       <span class="nav-pct" id="np-legal">0%</span>
-    </a>
-    <div class="nav-divider">Honeymoon</div>
-    <a onclick="go('vietnam')" data-page="vietnam">
-      <span class="nav-icon">🇻🇳</span> Vietnam Itinerary
-      <span class="nav-pct" id="np-vietnam">0%</span>
     </a>
     <div class="nav-divider">Guests</div>
     <a onclick="go('guests')" data-page="guests">
@@ -1037,52 +1056,104 @@
   <div class="hero">
     <div class="hero-eyebrow">Personal Prep</div>
     <h2>Honeymoon Guide</h2>
-    <p>Laraib & Musharraf · Curated destinations · Post Dec 27</p>
-    <div class="hero-badge">✈️ Budget ₹1.5L – ₹3.5L recommended</div>
+    <p>Laraib & Musharraf · 14 destinations researched · Depart 29/30 Dec, return 5 Jan · Nothing decided yet</p>
+    <div class="hero-badge">✈️ Click any card below to jump to its full itinerary, photo & video</div>
   </div>
 
   <div class="card">
     <div class="card-header"><div class="ch-icon">🇮🇳</div><h3>Domestic Destinations</h3></div>
     <div class="dest-grid">
-      <div class="dest-card top-pick">
-        <div class="dest-top-badge">Top Pick for Dec</div>
-        <div class="dest-icon">🏔️</div>
-        <div class="dest-name">Kashmir</div>
-        <div class="dest-vibe">Romantic winter mountains · snow · Dal Lake</div>
-        <div class="dest-tags">
-          <span class="dest-tag tag-halal">★★★★★ Halal</span>
-          <span class="dest-tag tag-visa">No Visa</span>
-          <span class="dest-tag tag-budget">₹60K–₹1.2L</span>
-        </div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-icon">🏖️</div>
-        <div class="dest-name">Goa</div>
-        <div class="dest-vibe">Beaches · sunsets · Dec peak season</div>
+      <div class="dest-card top-pick" onclick="jumpTo('detail-pondicherry')">
+        <div class="dest-top-badge">Cheapest Overall</div>
+        <div class="dest-icon">🏛️</div>
+        <div class="dest-name">Pondicherry</div>
+        <div class="dest-vibe">French Quarter · Auroville · scooter-friendly</div>
         <div class="dest-tags">
           <span class="dest-tag tag-halal">★★★ Halal</span>
           <span class="dest-tag tag-visa">No Visa</span>
-          <span class="dest-tag tag-budget">₹60K–₹1.1L</span>
+          <span class="dest-tag tag-budget">₹65K–₹1.02L</span>
         </div>
       </div>
-      <div class="dest-card">
+      <div class="dest-card" onclick="jumpTo('detail-udaipur')">
         <div class="dest-icon">🏰</div>
         <div class="dest-name">Udaipur</div>
-        <div class="dest-vibe">Royal palaces · romantic lakes · heritage</div>
+        <div class="dest-vibe">Royal palaces · Lake Pichola · overnight train option</div>
         <div class="dest-tags">
           <span class="dest-tag tag-halal">★★★ Halal</span>
           <span class="dest-tag tag-visa">No Visa</span>
-          <span class="dest-tag tag-budget">₹50K–₹90K</span>
+          <span class="dest-tag tag-budget">₹52.5K–₹1.4L</span>
         </div>
       </div>
-      <div class="dest-card">
-        <div class="dest-icon">🌴</div>
-        <div class="dest-name">Kerala</div>
-        <div class="dest-vibe">Backwaters · houseboat · lush green hills</div>
+      <div class="dest-card top-pick" onclick="jumpTo('detail-kashmir')">
+        <div class="dest-top-badge">❄️ Best Snow Pick</div>
+        <div class="dest-icon">🏔️</div>
+        <div class="dest-name">Kashmir</div>
+        <div class="dest-vibe">Gulmarg Gondola · Dal Lake · roads stay open in Dec</div>
         <div class="dest-tags">
           <span class="dest-tag tag-halal">★★★★★ Halal</span>
           <span class="dest-tag tag-visa">No Visa</span>
-          <span class="dest-tag tag-budget">₹70K–₹1.3L</span>
+          <span class="dest-tag tag-budget">₹69K–₹1.33L</span>
+        </div>
+      </div>
+      <div class="dest-card" onclick="jumpTo('detail-coorg')">
+        <div class="dest-icon">🌿</div>
+        <div class="dest-name">Coorg</div>
+        <div class="dest-vibe">Coffee estates · Barapole rafting</div>
+        <div class="dest-tags">
+          <span class="dest-tag tag-halal">★★★ Halal</span>
+          <span class="dest-tag tag-visa">No Visa</span>
+          <span class="dest-tag tag-budget">₹73K–₹1.09L</span>
+        </div>
+      </div>
+      <div class="dest-card" onclick="jumpTo('detail-andaman')">
+        <div class="dest-icon">🏝️</div>
+        <div class="dest-name">Andaman</div>
+        <div class="dest-vibe">Havelock · Radhanagar Beach · trial scuba diving</div>
+        <div class="dest-tags">
+          <span class="dest-tag tag-halal">★★★★ Halal</span>
+          <span class="dest-tag tag-visa">No Visa</span>
+          <span class="dest-tag tag-budget">₹97K–₹1.73L</span>
+        </div>
+      </div>
+      <div class="dest-card" onclick="jumpTo('detail-kerala')">
+        <div class="dest-icon">🌴</div>
+        <div class="dest-name">Kerala</div>
+        <div class="dest-vibe">Munnar tea gardens · Alleppey houseboat</div>
+        <div class="dest-tags">
+          <span class="dest-tag tag-halal">★★★★★ Halal</span>
+          <span class="dest-tag tag-visa">No Visa</span>
+          <span class="dest-tag tag-budget">₹1.1L–₹2.08L</span>
+        </div>
+      </div>
+      <div class="dest-card" onclick="jumpTo('detail-meghalaya')">
+        <div class="dest-icon">🌫️</div>
+        <div class="dest-name">Meghalaya</div>
+        <div class="dest-vibe">Living root bridges · Dawki's clear river</div>
+        <div class="dest-tags">
+          <span class="dest-tag tag-halal">★★★ Halal</span>
+          <span class="dest-tag tag-visa">No Visa</span>
+          <span class="dest-tag tag-budget">₹78K–₹1.28L</span>
+        </div>
+      </div>
+      <div class="dest-card" onclick="jumpTo('detail-sikkim')">
+        <div class="dest-icon">⛰️</div>
+        <div class="dest-name">Sikkim</div>
+        <div class="dest-vibe">Gangtok · Tsomgo Lake · Nathula Pass</div>
+        <div class="dest-tags">
+          <span class="dest-tag tag-halal">★★★ Halal</span>
+          <span class="dest-tag tag-visa">No Visa</span>
+          <span class="dest-tag tag-budget">₹75K–₹1.3L</span>
+        </div>
+      </div>
+      <div class="dest-card risk" onclick="jumpTo('detail-ladakh')">
+        <div class="dest-top-badge" style="background:#c0392b;">⚠️ Winter Risk</div>
+        <div class="dest-icon">🏜️</div>
+        <div class="dest-name">Ladakh</div>
+        <div class="dest-vibe">Pangong Lake · flights can get weather-cancelled</div>
+        <div class="dest-tags">
+          <span class="dest-tag tag-halal">★★★ Halal</span>
+          <span class="dest-tag tag-visa">No Visa</span>
+          <span class="dest-tag tag-budget">₹70K–₹1.2L</span>
         </div>
       </div>
     </div>
@@ -1091,56 +1162,56 @@
   <div class="card">
     <div class="card-header"><div class="ch-icon">🌍</div><h3>International Destinations</h3></div>
     <div class="dest-grid">
-      <div class="dest-card top-pick">
-        <div class="dest-top-badge">⭐ Top Pick</div>
-        <div class="dest-icon">🇹🇷</div>
-        <div class="dest-name">Turkey</div>
-        <div class="dest-vibe">Istanbul + Cappadocia balloon rides · Islamic heritage · snow in Dec</div>
+      <div class="dest-card top-pick" onclick="jumpTo('detail-nepal')">
+        <div class="dest-top-badge">🪂 Best Value Int'l</div>
+        <div class="dest-icon">🇳🇵</div>
+        <div class="dest-name">Nepal</div>
+        <div class="dest-vibe">Kathmandu + Pokhara paragliding · visa-free</div>
         <div class="dest-tags">
-          <span class="dest-tag tag-halal">★★★★★ Halal</span>
-          <span class="dest-tag tag-visa">e-Visa ~₹4K</span>
-          <span class="dest-tag tag-budget">₹1.5L–₹2.5L</span>
-        </div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-icon">🏝️</div>
-        <div class="dest-name">Maldives</div>
-        <div class="dest-vibe">Overwater bungalows · crystal lagoons · Dec is peak season</div>
-        <div class="dest-tags">
-          <span class="dest-tag tag-halal">★★★★★ Halal</span>
-          <span class="dest-tag tag-visa">On Arrival</span>
-          <span class="dest-tag tag-budget">₹2L–₹4L</span>
-        </div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-icon">🇦🇪</div>
-        <div class="dest-name">Dubai</div>
-        <div class="dest-vibe">Luxury skyline · desert safari · coolest month in Dec</div>
-        <div class="dest-tags">
-          <span class="dest-tag tag-halal">★★★★★ Halal</span>
-          <span class="dest-tag tag-visa">e-Visa ~₹6K</span>
-          <span class="dest-tag tag-budget">₹1.2L–₹2L</span>
-        </div>
-      </div>
-      <div class="dest-card top-pick">
-        <div class="dest-top-badge">Best Value</div>
-        <div class="dest-icon">🇲🇾</div>
-        <div class="dest-name">Malaysia</div>
-        <div class="dest-vibe">KL + Langkawi · world's best halal food · visa-free</div>
-        <div class="dest-tags">
-          <span class="dest-tag tag-halal">★★★★★ Halal</span>
+          <span class="dest-tag tag-halal">★★★ Halal</span>
           <span class="dest-tag tag-visa">Visa-Free</span>
-          <span class="dest-tag tag-budget">₹1L–₹1.8L</span>
+          <span class="dest-tag tag-budget">₹80K–₹1.6L</span>
         </div>
       </div>
-      <div class="dest-card">
-        <div class="dest-icon">🇦🇿</div>
-        <div class="dest-name">Azerbaijan</div>
-        <div class="dest-vibe">Baku · European feel · affordable luxury · snowy in Dec</div>
+      <div class="dest-card" onclick="jumpTo('detail-vietnam')">
+        <div class="dest-icon">🇻🇳</div>
+        <div class="dest-name">Vietnam</div>
+        <div class="dest-vibe">Hanoi · Ha Long Bay cruise · Hoi An lanterns</div>
         <div class="dest-tags">
-          <span class="dest-tag tag-halal">★★★★ Halal</span>
-          <span class="dest-tag tag-visa">e-Visa ~₹3.5K</span>
-          <span class="dest-tag tag-budget">₹90K–₹1.5L</span>
+          <span class="dest-tag tag-halal">★★★ Halal</span>
+          <span class="dest-tag tag-visa">e-Visa</span>
+          <span class="dest-tag tag-budget">₹1.17L–₹2.35L</span>
+        </div>
+      </div>
+      <div class="dest-card" onclick="jumpTo('detail-srilanka')">
+        <div class="dest-icon">🇱🇰</div>
+        <div class="dest-name">Sri Lanka</div>
+        <div class="dest-vibe">Mirissa whale watching · Galle Fort · tea country</div>
+        <div class="dest-tags">
+          <span class="dest-tag tag-halal">★★★ Halal</span>
+          <span class="dest-tag tag-visa">Free ETA</span>
+          <span class="dest-tag tag-budget">₹1.27L–₹2.15L</span>
+        </div>
+      </div>
+      <div class="dest-card" onclick="jumpTo('detail-bali')">
+        <div class="dest-icon">🇮🇩</div>
+        <div class="dest-name">Bali</div>
+        <div class="dest-vibe">Ubud rice terraces · Uluwatu · Nusa Penida</div>
+        <div class="dest-tags">
+          <span class="dest-tag tag-halal">★★★★★ Halal</span>
+          <span class="dest-tag tag-visa">e-VOA ~₹3.5K</span>
+          <span class="dest-tag tag-budget">₹1.72L–₹2.87L</span>
+        </div>
+      </div>
+      <div class="dest-card risk" onclick="jumpTo('detail-zanzibar')">
+        <div class="dest-top-badge" style="background:#c0392b;">💸 Most Expensive</div>
+        <div class="dest-icon">🇹🇿</div>
+        <div class="dest-name">Zanzibar</div>
+        <div class="dest-vibe">Stone Town spice tour · 95% Muslim, halal everywhere</div>
+        <div class="dest-tags">
+          <span class="dest-tag tag-halal">★★★★★ Halal</span>
+          <span class="dest-tag tag-visa">e-Visa + Yellow Fever</span>
+          <span class="dest-tag tag-budget">₹1.96L–₹3.76L</span>
         </div>
       </div>
     </div>
@@ -1155,12 +1226,425 @@
     <div class="cl-progress-bar"><div class="cl-progress-fill" id="cpf-honeymoon"></div></div>
     <ul class="checklist" id="cl-honeymoon">
       <li data-id="h1"><div class="cb"></div><span class="cb-text">Decide: domestic or international?</span></li>
-      <li data-id="h2"><div class="cb"></div><span class="cb-text">Choose final destination — consider Dec season and budget</span></li>
+      <li data-id="h2"><div class="cb"></div><span class="cb-text">Choose final destination — consider Dec/Jan season and budget</span></li>
       <li data-id="h3"><div class="cb"></div><span class="cb-text">Check passport validity — 6+ months from travel date</span></li>
-      <li data-id="h4"><div class="cb"></div><span class="cb-text">Apply for visa if needed (Turkey, Dubai, Azerbaijan)</span></li>
-      <li data-id="h5"><div class="cb"></div><span class="cb-text">Book flights — 2–3 months in advance (check Skyscanner)</span></li>
+      <li data-id="h4"><div class="cb"></div><span class="cb-text">Apply for visa if needed</span></li>
+      <li data-id="h5"><div class="cb"></div><span class="cb-text">Book flights — New Year week is peak everywhere, book now</span></li>
       <li data-id="h6"><div class="cb"></div><span class="cb-text">Book hotel / resort with honeymoon package</span></li>
     </ul>
+  </div>
+
+  <!-- ═══════════ FULL ITINERARY DETAILS ═══════════ -->
+  <div class="card" style="background:var(--navy); color:#fff;">
+    <h3 style="color:#fff; margin:0;">📖 Full 7-Day Itineraries — click a card above to jump here</h3>
+    <p style="font-size:.82rem; color:rgba(255,255,255,.7); margin-top:6px;">Every destination below: a real photo, a real YouTube video, day-by-day plan, one signature paid activity with its real cost, and the Travel vs. Everything-Else cost split.</p>
+  </div>
+
+  <!-- Pondicherry -->
+  <div class="card detail-card" id="detail-pondicherry">
+    <img class="detail-photo" src="images/pondicherry.jpg" alt="Dumas Street, French Quarter, Pondicherry">
+    <div class="card-header"><div class="ch-icon">🏛️</div><h3>Pondicherry</h3></div>
+    <a class="yt-btn" href="https://youtube.com/watch?v=p7TtHzyQA8o" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Puducherry_Dumas_Street.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Chennai → Pondy</td><td>Arrive Chennai, road transfer (3h)</td></tr>
+        <tr><td>2</td><td>Pondicherry</td><td>French Quarter walk, Promenade Beach, cafés</td></tr>
+        <tr><td>3</td><td>Pondicherry</td><td>Auroville + Matrimandir, Sri Aurobindo Ashram</td></tr>
+        <tr><td>4</td><td>Pondicherry</td><td>Chunnambar boat house, backwater boardwalk</td></tr>
+        <tr><td>5</td><td>Pondicherry</td><td>Scooter day — Paradise Beach, Serenity Beach</td></tr>
+        <tr><td>6</td><td>Pondicherry</td><td>Bharathi Park, Museum, Manakula Vinayagar Temple</td></tr>
+        <tr><td>7</td><td>Chennai</td><td>Road transfer back, departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Two-wheeler rental — ₹250/day + ₹100 fuel — a full week for both of you under ₹2,500 total.</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights + road transfer)</td><td>₹40,000–60,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹25,000–42,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹65,000–1,02,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Udaipur -->
+  <div class="card detail-card" id="detail-udaipur">
+    <img class="detail-photo" src="images/udaipur.jpg" alt="City Palace by Lake Pichola, Udaipur">
+    <div class="card-header"><div class="ch-icon">🏰</div><h3>Udaipur</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=EI0uoWqaSsU" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:City_Palace_by_lake_Pichola,_Udaipur.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Udaipur</td><td>Arrive (train or flight), check in</td></tr>
+        <tr><td>2</td><td>Udaipur</td><td>City Palace, Lake Pichola boat ride</td></tr>
+        <tr><td>3</td><td>Udaipur</td><td>Jagdish Temple, Saheliyon ki Bari, Bagore ki Haveli dance show</td></tr>
+        <tr><td>4</td><td>Udaipur</td><td>Shilpgram craft village, Fateh Sagar Lake</td></tr>
+        <tr><td>5</td><td>Udaipur</td><td>Monsoon Palace sunset drive, candlelight dinner at Ambrai</td></tr>
+        <tr><td>6</td><td>Udaipur</td><td>Leisure/spa, Hathi Pol market</td></tr>
+        <tr><td>7</td><td>Udaipur</td><td>Departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Lake Pichola boat ride — ₹400/person daytime, ₹700/person sunset ride (~₹1,400 for 2).</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (Mewar Express train, 3AC)</td><td>~₹4,500 — or flight ₹24,000–40,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹48,000–1,00,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹52,500–1,40,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Kashmir -->
+  <div class="card detail-card" id="detail-kashmir">
+    <img class="detail-photo" src="images/kashmir.jpg" alt="Snow-capped mountains at Gulmarg, Kashmir">
+    <div class="card-header"><div class="ch-icon">🏔️</div><h3>Kashmir — snow honeymoon</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=d4h9KJXM5Jk" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Majestic_snow_capped_mountains_at_Gulmarg,_Kashmir,_India.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Srinagar</td><td>Arrive, Dal Lake shikara ride, houseboat check-in</td></tr>
+        <tr><td>2</td><td>Srinagar</td><td>Mughal Gardens, local market</td></tr>
+        <tr><td>3</td><td>Gulmarg</td><td>Drive over, Gondola Phase 1+2, snow play</td></tr>
+        <tr><td>4</td><td>Gulmarg</td><td>Skiing/snowboarding lesson, leisure</td></tr>
+        <tr><td>5</td><td>Pahalgam</td><td>Drive over, Betaab Valley, Aru Valley</td></tr>
+        <tr><td>6</td><td>Srinagar</td><td>Return, houseboat night</td></tr>
+        <tr><td>7</td><td>Srinagar</td><td>Departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Gulmarg Gondola — ₹800/person Phase 1, ₹1,800/person combined (~₹3,600 for both, full ride).</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights + private car, 6 days)</td><td>₹34,000–43,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹35,000–90,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹69,000–1,33,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Coorg -->
+  <div class="card detail-card" id="detail-coorg">
+    <img class="detail-photo" src="images/coorg.jpg" alt="Abbey Falls, Coorg, Karnataka">
+    <div class="card-header"><div class="ch-icon">🌿</div><h3>Coorg</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=W6oFD9PKsmQ" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:ABBEY_FALLS_,COORG_,KARNATAKA.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Bangalore → Coorg</td><td>Arrive, road transfer (5-6h)</td></tr>
+        <tr><td>2</td><td>Coorg</td><td>Coffee plantation walk, Abbey Falls</td></tr>
+        <tr><td>3</td><td>Coorg</td><td>Raja's Seat sunset, Dubare Elephant Camp</td></tr>
+        <tr><td>4</td><td>Coorg</td><td>Barapole River — white water rafting</td></tr>
+        <tr><td>5</td><td>Coorg</td><td>Talacauvery, Namdroling Monastery</td></tr>
+        <tr><td>6</td><td>Coorg</td><td>Leisure day, farm tour</td></tr>
+        <tr><td>7</td><td>Bangalore</td><td>Road transfer back, departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Barapole River rafting — ₹1,200–2,000/person (~₹2,400–4,000 for both).</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights + road transfer)</td><td>₹48,000–64,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹25,000–45,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹73,000–1,09,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Andaman -->
+  <div class="card detail-card" id="detail-andaman">
+    <img class="detail-photo" src="images/andaman.jpg" alt="Radhanagar Beach, Havelock Island, Andaman">
+    <div class="card-header"><div class="ch-icon">🏝️</div><h3>Andaman</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=e4dn1gBMFmQ" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Radhanagar_beach,_Havelock_islands,_Andaman_and_Nicobar.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Port Blair</td><td>Arrive, Corbyn's Cove Beach</td></tr>
+        <tr><td>2</td><td>Havelock</td><td>Ferry over, Radhanagar Beach sunset</td></tr>
+        <tr><td>3</td><td>Havelock</td><td>Elephant Beach — snorkeling / trial scuba</td></tr>
+        <tr><td>4</td><td>Havelock</td><td>Beach/resort leisure, couples' spa</td></tr>
+        <tr><td>5</td><td>Neil Island</td><td>Ferry over, Bharatpur + Laxmanpur Beach, cycling</td></tr>
+        <tr><td>6</td><td>Port Blair</td><td>Ferry back, Cellular Jail light & sound show</td></tr>
+        <tr><td>7</td><td>Port Blair</td><td>Departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Trial scuba dive (no certification needed) — ₹4,000–6,500/person (~₹8,000–13,000 for both).</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights, NY-peak + ferries)</td><td>₹62,000–98,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹35,000–75,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹97,000–1,73,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Kerala -->
+  <div class="card detail-card" id="detail-kerala">
+    <img class="detail-photo" src="images/kerala-alleppey.jpg" alt="Alleppey backwaters, Kerala">
+    <div class="card-header"><div class="ch-icon">🌴</div><h3>Kerala — Munnar → Alleppey</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=Zma81Tbv2Uw" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Allepy_Backwaters,_Kerala,_India.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Kochi</td><td>Arrive, Fort Kochi walk, Chinese fishing nets, Kathakali show</td></tr>
+        <tr><td>2</td><td>Munnar</td><td>Drive to Munnar (4h), tea garden walk</td></tr>
+        <tr><td>3</td><td>Munnar</td><td>Kolukkumalai sunrise trek, Mattupetty Dam</td></tr>
+        <tr><td>4</td><td>Munnar</td><td>Leisure day — spa, estate walks</td></tr>
+        <tr><td>5</td><td>Alleppey</td><td>Drive to Alleppey (4h), board houseboat</td></tr>
+        <tr><td>6</td><td>Alleppey → Kochi</td><td>Backwater cruise, return to Kochi</td></tr>
+        <tr><td>7</td><td>Kochi</td><td>Departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Alleppey overnight houseboat — ₹8,000–15,000/night for 2 (private, meals included).</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights + car/driver)</td><td>₹50,000–78,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹60,000–1,30,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹1,10,000–2,08,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Meghalaya -->
+  <div class="card detail-card" id="detail-meghalaya">
+    <img class="detail-photo" src="images/meghalaya.jpg" alt="Living root bridge, Nongriat, Meghalaya">
+    <div class="card-header"><div class="ch-icon">🌫️</div><h3>Meghalaya — Shillong → Cherrapunji → Dawki</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=2OgKhP2Rvkk" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Living_root_bridges,_Nongriat_village,_Meghalaya.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Shillong</td><td>Arrive via Guwahati, Ward's Lake</td></tr>
+        <tr><td>2</td><td>Shillong</td><td>Shillong Peak, Laitlum Canyons sunrise</td></tr>
+        <tr><td>3</td><td>Cherrapunji</td><td>Drive over (2h), Nohkalikai Falls</td></tr>
+        <tr><td>4</td><td>Nongriat</td><td>Trek to Double Decker Living Root Bridge</td></tr>
+        <tr><td>5</td><td>Cherrapunji</td><td>Mawsmai Caves, Seven Sisters Falls</td></tr>
+        <tr><td>6</td><td>Dawki</td><td>Umngot River boat ride, Mawlynnong village</td></tr>
+        <tr><td>7</td><td>Shillong</td><td>Return via Guwahati, departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Double Decker Root Bridge entry — ₹50/person, genuinely this cheap. The trek is free (~3,500 steps).</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights + taxi for the week)</td><td>₹38,000–58,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹40,000–70,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹78,000–1,28,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Sikkim -->
+  <div class="card detail-card" id="detail-sikkim">
+    <img class="detail-photo" src="images/sikkim.jpg" alt="Tsomgo Lake, Sikkim">
+    <div class="card-header"><div class="ch-icon">⛰️</div><h3>Sikkim — Gangtok</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=HUZkoQfsuz4" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Tsomgo_Lake,_Sikkim.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <p style="font-size:.8rem; color:var(--muted); background:#fdf0eb; padding:10px 14px; border-radius:8px;">⚠️ North Sikkim (Lachung/Yumthang) is often snow-blocked in your exact window — Gangtok + Tsomgo Lake stay reachable.</p>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Gangtok</td><td>Arrive via Bagdogra, MG Marg evening</td></tr>
+        <tr><td>2</td><td>Gangtok</td><td>Tsomgo Lake + Baba Mandir day trip</td></tr>
+        <tr><td>3</td><td>Gangtok</td><td>Rumtek Monastery, Banjhakri Falls</td></tr>
+        <tr><td>4</td><td>Gangtok</td><td>Namchi — Char Dham, Buddha Park</td></tr>
+        <tr><td>5</td><td>Gangtok</td><td>Leisure, local market, cable car</td></tr>
+        <tr><td>6</td><td>Gangtok</td><td>Ropeway + monastery hopping</td></tr>
+        <tr><td>7</td><td>Gangtok</td><td>Return via Bagdogra, departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Tsomgo Lake + Nathula permit — ₹200/person, shared cab package ₹700–1,000/person (~₹1,400–2,000 for both); yak ride photo ₹100/person extra.</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights + road + sightseeing cabs)</td><td>₹35,000–55,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹40,000–75,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹75,000–1,30,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Ladakh -->
+  <div class="card detail-card" id="detail-ladakh">
+    <img class="detail-photo" src="images/ladakh.jpg" alt="Pangong Lake, Ladakh">
+    <div class="card-header"><div class="ch-icon">🏜️</div><h3>Ladakh (Leh) ⚠️ extreme winter, real risk</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=hlQ6ZYoMam4" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Blue_Pangong_lake,_Ladakh.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Leh</td><td>Arrive, mandatory acclimatization rest day (3,500m altitude)</td></tr>
+        <tr><td>2</td><td>Leh</td><td>Leh Palace, Shanti Stupa, local market</td></tr>
+        <tr><td>3</td><td>Leh</td><td>Thiksey & Hemis Monasteries</td></tr>
+        <tr><td>4</td><td>Leh</td><td>Nubra Valley or Pangong (only if roads open)</td></tr>
+        <tr><td>5</td><td>Leh</td><td>Buffer day for weather delays</td></tr>
+        <tr><td>6</td><td>Leh</td><td>Magnetic Hill, Sangam confluence</td></tr>
+        <tr><td>7</td><td>Leh</td><td>Departure — build in a buffer, winter flights get weather-cancelled</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Not much is bookable in winter — this is scenery + monasteries, not adventure tours. Treat Day 4 as optional.</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights unconfirmed live + taxi hire)</td><td>₹40,000–60,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹30,000–60,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹70,000–1,20,000 — real cancellation risk</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Nepal -->
+  <div class="card detail-card" id="detail-nepal">
+    <img class="detail-photo" src="images/nepal.jpg" alt="Phewa Lake, Pokhara, Nepal">
+    <div class="card-header"><div class="ch-icon">🇳🇵</div><h3>Nepal — Kathmandu + Pokhara 🪂 the paragliding answer</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=ZBPUyk8ilSM" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Phewa_lake,_Pokhara.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Kathmandu</td><td>Arrive — no visa needed, Thamel evening</td></tr>
+        <tr><td>2</td><td>Kathmandu</td><td>Durbar Square, Swayambhunath</td></tr>
+        <tr><td>3</td><td>Kathmandu</td><td>Pashupatinath, Boudhanath Stupa</td></tr>
+        <tr><td>4</td><td>Pokhara</td><td>Fly over (30min) or drive, Phewa Lake boat ride</td></tr>
+        <tr><td>5</td><td>Pokhara</td><td>Paragliding at Sarangkot, Tal Barahi Temple</td></tr>
+        <tr><td>6</td><td>Pokhara</td><td>World Peace Pagoda, Davis Falls</td></tr>
+        <tr><td>7</td><td>Kathmandu</td><td>Return, departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Paragliding cost, direct:</strong> Tandem paragliding at Sarangkot — NPR 8,500/person (~₹5,300/person) for a 25-30 min flight with pilot + insurance + hotel pickup, so ~₹10,600 for both. Photo/video package adds NPR 2,000-3,000/person (~₹1,250–1,900).</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights + internal KTM↔Pokhara)</td><td>₹40,000–70,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹40,000–90,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹80,000–1,60,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Sri Lanka -->
+  <div class="card detail-card" id="detail-srilanka">
+    <img class="detail-photo" src="images/srilanka.jpg" alt="Secret Beach, Mirissa, Sri Lanka">
+    <div class="card-header"><div class="ch-icon">🇱🇰</div><h3>Sri Lanka — Colombo → Bentota → Mirissa → Nuwara Eliya</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=mOqimcjhaLU" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Secret_beach_-_Mirissa_Sri_Lanka.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Colombo</td><td>Arrive, Galle Face Green evening</td></tr>
+        <tr><td>2</td><td>Bentota</td><td>Drive over (2h), beach, river safari</td></tr>
+        <tr><td>3</td><td>Galle</td><td>Galle Fort walk, lighthouse</td></tr>
+        <tr><td>4</td><td>Mirissa</td><td>Whale watching (early AM), beach afternoon</td></tr>
+        <tr><td>5</td><td>Nuwara Eliya</td><td>Drive to hill country, tea estate</td></tr>
+        <tr><td>6</td><td>Nuwara Eliya</td><td>Horton Plains / Ella day trip</td></tr>
+        <tr><td>7</td><td>Colombo</td><td>Return, departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Mirissa whale watching — $50-60/person (~₹4,200-5,000/person), ~₹8,400-10,000 for both, hotel pickup + breakfast usually included.</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights + driver for the week)</td><td>₹85,000–1,15,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹42,000–1,00,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹1,27,000–2,15,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Vietnam -->
+  <div class="card detail-card" id="detail-vietnam">
+    <img class="detail-photo" src="images/vietnam.jpg" alt="Ha Long Bay, Vietnam">
+    <div class="card-header"><div class="ch-icon">🇻🇳</div><h3>Vietnam — Hanoi → Ha Long Bay → Hoi An → HCMC</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=ppfusm6vat0" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Halong_Bay_in_Vietnam.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Hanoi</td><td>Arrive, Old Quarter evening</td></tr>
+        <tr><td>2</td><td>Ha Long Bay</td><td>Transfer + board cruise, kayaking</td></tr>
+        <tr><td>3</td><td>Ha Long Bay → Hanoi</td><td>Sunrise on deck, evening flight to Da Nang</td></tr>
+        <tr><td>4</td><td>Hoi An</td><td>Ancient Town lantern walk, tailoring</td></tr>
+        <tr><td>5</td><td>Hoi An</td><td>An Bang Beach, cooking class</td></tr>
+        <tr><td>6</td><td>Ho Chi Minh City</td><td>Fly over, Bui Vien Street evening</td></tr>
+        <tr><td>7</td><td>Ho Chi Minh City</td><td>Ben Thanh Market, departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Ha Long Bay overnight cruise cabin — ₹5,000–25,000/night/cabin (budget Pelican to luxury Paradise Elegance).</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights NY-peak + internal flights)</td><td>₹71,000–1,25,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹46,000–1,10,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹1,17,000–2,35,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Bali -->
+  <div class="card detail-card" id="detail-bali">
+    <img class="detail-photo" src="images/bali.jpg" alt="Jatiluwih rice terraces, Bali">
+    <div class="card-header"><div class="ch-icon">🇮🇩</div><h3>Bali — Ubud → Uluwatu/Seminyak → Nusa Penida</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=XFrEFffcXt8" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Jatiluwih_rice_terraces.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Ubud</td><td>Arrive (e-VOA on arrival), villa check-in</td></tr>
+        <tr><td>2</td><td>Ubud</td><td>Tegallalang rice terraces, Sacred Monkey Forest</td></tr>
+        <tr><td>3</td><td>Uluwatu</td><td>Uluwatu Temple + Kecak fire dance sunset</td></tr>
+        <tr><td>4</td><td>Seminyak</td><td>Beach day, couples' spa</td></tr>
+        <tr><td>5</td><td>Nusa Penida</td><td>Speedboat day trip — Kelingking Beach, snorkeling</td></tr>
+        <tr><td>6</td><td>Seminyak</td><td>Beach club sunset</td></tr>
+        <tr><td>7</td><td>Denpasar</td><td>Departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Nusa Penida — speedboat alone IDR 150,000–350,000/person one-way (~₹800-1,900); all-inclusive tour package (boat+snorkel+guide) IDR 500,000–1,000,000/person (~₹2,700-5,400/person), so ~₹5,400-10,800 for both.</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights, NY-peak)</td><td>₹90,000–1,40,000</td></tr>
+        <tr><td>🛂 Visa (e-VOA, 2 people)</td><td>₹6,000–7,000</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹76,000–1,40,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹1,72,000–2,87,000</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Zanzibar -->
+  <div class="card detail-card" id="detail-zanzibar">
+    <img class="detail-photo" src="images/zanzibar.jpg" alt="Streets of Stone Town, Zanzibar">
+    <div class="card-header"><div class="ch-icon">🇹🇿</div><h3>Zanzibar, Tanzania — Stone Town + Nungwi/Paje 💸 most expensive</h3></div>
+    <a class="yt-btn" href="https://www.youtube.com/watch?v=DO7kHQ_edkc" target="_blank" rel="noopener">▶ Watch travel guide</a>
+    <div class="detail-meta">Photo: <a href="https://commons.wikimedia.org/wiki/File:Streets_of_Stone_town,_Zanzibar.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Day</th><th>Stop</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Stone Town</td><td>Arrive, evening walk through old town</td></tr>
+        <tr><td>2</td><td>Stone Town</td><td>Spice tour, Malindi Mosque, Forodhani market</td></tr>
+        <tr><td>3</td><td>Nungwi</td><td>Transfer to beach, snorkeling</td></tr>
+        <tr><td>4</td><td>Nungwi</td><td>Beach day, sunset dhow cruise</td></tr>
+        <tr><td>5</td><td>Paje</td><td>Kitesurfing lesson (optional) or beach leisure</td></tr>
+        <tr><td>6</td><td>Paje</td><td>Jozani Forest (red colobus monkeys), village visit</td></tr>
+        <tr><td>7</td><td>Stone Town</td><td>Return, departure</td></tr>
+      </tbody>
+    </table></div>
+    <div class="signature-box">🎯 <strong>Signature activity:</strong> Half-day spice tour — $15-35/person (~₹1,250-2,900/person), ~₹2,500-5,800 for both, usually with a traditional Swahili lunch.</div>
+    <div class="tbl-wrap"><table class="tbl cost-tbl">
+      <tbody>
+        <tr><td>✈️ Travel (flights, NY-peak — most expensive route here)</td><td>₹1,40,000–2,60,000</td></tr>
+        <tr><td>🛂 Visa + Yellow Fever cert (2 people)</td><td>~₹12,400–14,400</td></tr>
+        <tr><td>🏨 Everything else</td><td>₹48,000–1,08,000</td></tr>
+        <tr class="total-row"><td>Total</td><td>₹1,96,400–3,76,400</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin:0 0 10px;">💡 Bottom line</h3>
+    <p style="font-size:.85rem; line-height:1.7;">
+      <strong>Cheapest, lowest-risk overall:</strong> Udaipur by train.<br>
+      <strong>Cheapest "real getaway" feel:</strong> Pondicherry.<br>
+      <strong>Best snow honeymoon that won't get cancelled:</strong> Kashmir.<br>
+      <strong>Your paragliding thrill, cheapest and most reliable:</strong> Nepal (Pokhara).<br>
+      <strong>Most expensive by far:</strong> Zanzibar — driven almost entirely by New Year flight scarcity.<br>
+      <strong>Real weather/closure risk in this window:</strong> Ladakh, and North Sikkim's higher-altitude legs.
+    </p>
   </div>
 </section>
 
@@ -1296,270 +1780,6 @@
   </div><!-- /.lock-gate -->
 </section>
 
-<!-- ═══════════ VIETNAM ═══════════ -->
-<section class="page" id="page-vietnam">
-  <div class="hero">
-    <div class="hero-eyebrow">Honeymoon · 11 Days · Dec 28 – Jan 7</div>
-    <h2>Vietnam Honeymoon 🇻🇳</h2>
-    <p>Laraib & Musharraf · Delhi → Hanoi → Ha Long Bay → Hoi An → Ho Chi Minh City → Delhi</p>
-    <div class="hero-badge">✈️ Book flights NOW — Dec 28 is peak season</div>
-  </div>
-
-  <!-- Your 3 questions answered -->
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">🎫</div><h3>Q1: Book Now vs. Flying on 28 Dec?</h3></div>
-    <div style="background:var(--rose-pale); border-radius:10px; padding:14px 18px; margin-bottom:16px; font-size:.88rem; border-left:3px solid var(--rose);">
-      <strong style="color:var(--navy);">Short answer: Book NOW.</strong> Dec 28 falls in the Christmas + New Year global peak window. Prices double or triple if you wait.
-    </div>
-    <div class="tbl-wrap"><table class="tbl">
-      <thead><tr><th>When you book</th><th>Est. fare (return/person)</th><th>Risk</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Now (July 2026)</strong></td><td>₹25,000 – ₹35,000</td><td style="color:#1a6e3e;">✅ Low — good seats</td></tr>
-        <tr><td>Sep–Oct 2026</td><td>₹35,000 – ₹50,000</td><td style="color:#9a7a1e;">⚠️ Medium</td></tr>
-        <tr><td>Nov–Dec 2026</td><td>₹55,000 – ₹85,000+</td><td style="color:#c0392b;">❌ High — may sell out</td></tr>
-      </tbody>
-    </table></div>
-    <p style="font-size:.82rem; color:var(--muted); margin-top:14px;">
-      <strong>Best airlines:</strong> IndiGo/AirAsia via KL or Bangkok · Vietnam Airlines · Thai Airways via BKK<br/>
-      <strong>Tip:</strong> Book <em>open jaw</em> — fly INTO Hanoi (HAN), fly OUT of Ho Chi Minh City (SGN). No backtracking needed.<br/>
-      <strong>Where to book:</strong> Skyscanner · Google Flights · MakeMyTrip
-    </p>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">🏠</div><h3>Q2: Airbnb vs. Hotel?</h3></div>
-    <p style="font-size:.85rem; color:var(--muted); margin-bottom:14px;"><strong style="color:var(--navy);">Verdict: Use Airbnb for most cities, cruise cabin for Ha Long Bay.</strong></p>
-    <div class="tbl-wrap"><table class="tbl">
-      <thead><tr><th>City</th><th>Best Stay Type</th><th>Budget/night</th></tr></thead>
-      <tbody>
-        <tr><td>Hanoi</td><td>Airbnb — boutique apt in Old Quarter</td><td>₹3,000 – ₹7,000</td></tr>
-        <tr><td>Ha Long Bay</td><td><strong>Cruise cabin</strong> (Airbnb not applicable)</td><td>₹8,000 – ₹25,000</td></tr>
-        <tr><td>Hoi An ⭐</td><td>Airbnb — private pool villa (best value)</td><td>₹4,000 – ₹10,000</td></tr>
-        <tr><td>Ho Chi Minh City</td><td>Airbnb — District 1 modern apartment</td><td>₹3,500 – ₹8,000</td></tr>
-      </tbody>
-    </table></div>
-    <p style="font-size:.78rem; color:var(--muted); margin-top:12px;">Always filter for "Entire place" · Read couple reviews · Confirm: AC, hot water, WiFi · Choose "Flexible" cancellation</p>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">📦</div><h3>Q3: Travel Package vs. Self-Plan?</h3></div>
-    <div style="background:var(--rose-pale); border-radius:10px; padding:14px 18px; margin-bottom:16px; font-size:.88rem; border-left:3px solid var(--rose);">
-      <strong style="color:var(--navy);">Verdict: Self-plan.</strong> A package adds 15–25% cost, won't allow Airbnb, and ignores your halal food needs. Plan it yourself — it's easier than you think.
-    </div>
-    <div class="tbl-wrap"><table class="tbl">
-      <thead><tr><th>What to DIY</th><th>What to use Klook/Viator for</th></tr></thead>
-      <tbody>
-        <tr><td>International flights (Skyscanner)</td><td>Ha Long Bay day tours</td></tr>
-        <tr><td>Airbnb accommodations</td><td>Hoi An cooking class / bicycle tour</td></tr>
-        <tr><td>Ha Long Bay cruise (book direct)</td><td>Cu Chi Tunnels tour (HCMC)</td></tr>
-        <tr><td>Internal Vietnam flights (Vietjet app)</td><td>Mekong Delta cruise</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <!-- Itinerary -->
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">🗓️</div><h3>11-Day Itinerary Overview</h3></div>
-    <div class="tbl-wrap"><table class="tbl">
-      <thead><tr><th>Dates</th><th>Destination</th><th>Nights</th><th>Stay</th></tr></thead>
-      <tbody>
-        <tr><td>Dec 28</td><td>✈️ Delhi → Hanoi</td><td>—</td><td>—</td></tr>
-        <tr><td>Dec 28–30</td><td>🏯 Hanoi — Old Quarter</td><td>2</td><td>Airbnb</td></tr>
-        <tr><td>Dec 30 – Jan 1</td><td>🛳️ Ha Long Bay</td><td>2</td><td>Cruise cabin</td></tr>
-        <tr><td>Jan 1</td><td>✈️ Hanoi → Da Nang</td><td>—</td><td>—</td></tr>
-        <tr><td>Jan 1–4</td><td>🏮 Hoi An — Pool Villa</td><td>3</td><td>Airbnb villa</td></tr>
-        <tr><td>Jan 4</td><td>✈️ Da Nang → Ho Chi Minh City</td><td>—</td><td>—</td></tr>
-        <tr><td>Jan 4–7</td><td>🌆 Ho Chi Minh City</td><td>3</td><td>Airbnb</td></tr>
-        <tr><td>Jan 7–8</td><td>✈️ HCMC → Delhi</td><td>—</td><td>—</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">🏯</div><h3>Hanoi — Days 1–2</h3></div>
-    <div class="gtl">
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 1 — Old Quarter & Hoan Kiem Lake</div>
-        <ul class="gtl-actions">
-          <li>Explore Hanoi Old Quarter's 36 narrow streets</li>
-          <li>Hoan Kiem Lake and Ngoc Son Temple — peaceful, romantic</li>
-          <li>Temple of Literature (1070 AD — stunning)</li>
-          <li>Rooftop dinner overlooking the lake at dusk</li>
-        </ul>
-      </div>
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 2 — Culture & Architecture</div>
-        <ul class="gtl-actions">
-          <li>Ho Chi Minh Mausoleum (exterior) and Ba Dinh Square</li>
-          <li>Vietnam Museum of Ethnology</li>
-          <li>Tran Quoc Pagoda — stunning lakeside pagoda for golden hour photos</li>
-          <li>Evening: Bia Hoi corner walk and street food exploration</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">🛳️</div><h3>Ha Long Bay — Days 3–4 · Most Romantic Part</h3></div>
-    <div style="background:var(--rose-pale); border-radius:10px; padding:12px 16px; margin-bottom:14px; font-size:.83rem; color:var(--navy);">
-      ⭐ Ha Long Bay cruise is the crown jewel of this trip. Book as early as possible — Dec slots sell out fast.
-    </div>
-    <div class="gtl">
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 3 — Board the Cruise</div>
-        <ul class="gtl-actions">
-          <li>Private car transfer from Hanoi (3.5 hrs)</li>
-          <li>Board cruise at noon · kayaking through limestone karsts</li>
-          <li>Sunset on deck with cocktails</li>
-          <li>3-course dinner on the boat (inform them of halal requirement)</li>
-        </ul>
-      </div>
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 4 — Sunrise & Return</div>
-        <ul class="gtl-actions">
-          <li>Dawn sunrise on deck — the most romantic moment of the trip</li>
-          <li>Morning swim · floating village visit</li>
-          <li>Tai chi on the sundeck (try it together!)</li>
-          <li>Disembark afternoon · evening flight to Da Nang</li>
-        </ul>
-      </div>
-    </div>
-    <div class="tbl-wrap" style="margin-top:14px;"><table class="tbl">
-      <thead><tr><th>Cruise</th><th>Stars</th><th>Price/cabin/night</th></tr></thead>
-      <tbody>
-        <tr><td>Pelican Cruise</td><td>★★★</td><td>₹5,000 – ₹8,000</td></tr>
-        <tr><td>Signature Royal Cruise</td><td>★★★★</td><td>₹8,000 – ₹12,000</td></tr>
-        <tr><td>Paradise Elegance</td><td>★★★★★</td><td>₹18,000 – ₹25,000</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">🏮</div><h3>Hoi An — Days 5–7 · Most Romantic City</h3></div>
-    <div class="gtl">
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 5 — Arrival & Ancient Town at Dusk</div>
-        <ul class="gtl-actions">
-          <li>Fly into Da Nang · taxi to Hoi An (30 min)</li>
-          <li>Check in to private pool villa Airbnb</li>
-          <li>Evening walk through Hoi An Ancient Town by lantern light — magical</li>
-        </ul>
-      </div>
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 6 — Beach & Lanterns</div>
-        <ul class="gtl-actions">
-          <li>An Bang Beach or Cua Dai Beach — calm, beautiful, uncrowded</li>
-          <li>Afternoon: relax at your villa pool</li>
-          <li>Evening: release lanterns on the river — one of the most romantic experiences possible</li>
-        </ul>
-      </div>
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 7 — Tailoring & Cooking Class</div>
-        <ul class="gtl-actions">
-          <li>Bicycle through rice fields to Tra Que vegetable village</li>
-          <li>Custom tailoring — get a suit made for Laraib in 24 hours!</li>
-          <li>Evening: cooking class together (many offer halal options)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">🌆</div><h3>Ho Chi Minh City — Days 8–10</h3></div>
-    <div class="gtl">
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 8 — Arrival & City Vibes</div>
-        <ul class="gtl-actions">
-          <li>Fly Da Nang → Ho Chi Minh City (1 hr)</li>
-          <li>Check in to District 1 Airbnb — heart of the city</li>
-          <li>Evening: Bui Vien Walking Street · halal dinner in District 1</li>
-        </ul>
-      </div>
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 9 — History & Rooftop Views</div>
-        <ul class="gtl-actions">
-          <li>Reunification Palace · Ben Thanh Market shopping</li>
-          <li>War Remnants Museum (powerful)</li>
-          <li>Evening: Chill Sky Bar rooftop — stunning city views at night</li>
-        </ul>
-      </div>
-      <div class="gtl-item">
-        <div class="gtl-dot"></div>
-        <div class="gtl-time">Day 10 — Day Trips</div>
-        <ul class="gtl-actions">
-          <li>Morning: Cu Chi Tunnels half-day tour (book on Klook)</li>
-          <li>Afternoon: Mekong Delta boat cruise — serene and beautiful</li>
-          <li>Evening: Farewell dinner at a nice restaurant</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Budget -->
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">💰</div><h3>Budget Estimate (2 People, 11 Nights)</h3></div>
-    <div class="tbl-wrap"><table class="tbl">
-      <thead><tr><th>Category</th><th>Budget</th><th>Mid-Range</th><th>Premium</th></tr></thead>
-      <tbody>
-        <tr><td>International flights (open jaw)</td><td>₹40,000</td><td>₹55,000</td><td>₹80,000</td></tr>
-        <tr><td>Internal Vietnam flights (2)</td><td>₹8,000</td><td>₹12,000</td><td>₹18,000</td></tr>
-        <tr><td>Ha Long Bay cruise (2 nights)</td><td>₹12,000</td><td>₹20,000</td><td>₹40,000</td></tr>
-        <tr><td>Airbnbs (9 nights)</td><td>₹25,000</td><td>₹45,000</td><td>₹80,000</td></tr>
-        <tr><td>Food (₹1,500/day for 2)</td><td>₹16,000</td><td>₹25,000</td><td>₹40,000</td></tr>
-        <tr><td>Activities & tours</td><td>₹10,000</td><td>₹18,000</td><td>₹35,000</td></tr>
-        <tr><td>Local transport (Grab)</td><td>₹5,000</td><td>₹8,000</td><td>₹12,000</td></tr>
-        <tr><td>Shopping & misc</td><td>₹8,000</td><td>₹15,000</td><td>₹30,000</td></tr>
-        <tr><td><strong>Total (2 people)</strong></td><td><strong>~₹1,24,000</strong></td><td><strong>~₹1,98,000</strong></td><td><strong>~₹3,35,000</strong></td></tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <!-- Booking checklist -->
-  <div class="card">
-    <div class="card-header">
-      <div class="ch-icon">✅</div>
-      <h3>Vietnam Booking Checklist</h3>
-      <div class="ch-progress"><strong id="cp-vietnam">0</strong><span id="ct-vietnam"> / 9</span> done</div>
-    </div>
-    <div class="cl-progress-bar"><div class="cl-progress-fill" id="cpf-vietnam"></div></div>
-    <ul class="checklist" id="cl-vietnam">
-      <li data-id="vn1"><div class="cb"></div><span class="cb-text">Check passport validity (6+ months from Dec 28, 2026)</span></li>
-      <li data-id="vn2"><div class="cb"></div><span class="cb-text">Apply for Vietnam e-visa at evisa.xuatnhapcanh.gov.vn (~$25)</span></li>
-      <li data-id="vn3"><div class="cb"></div><span class="cb-text">Book international flights DEL → HAN (open jaw) + SGN → DEL (do this NOW)</span></li>
-      <li data-id="vn4"><div class="cb"></div><span class="cb-text">Book Ha Long Bay cruise (Dec 30–Jan 1) — LIMITED SPOTS</span></li>
-      <li data-id="vn5"><div class="cb"></div><span class="cb-text">Book internal flights HAN → DAD and DAD → SGN (Vietjet / Vietnam Airlines)</span></li>
-      <li data-id="vn6"><div class="cb"></div><span class="cb-text">Book Hanoi Airbnb — Dec 28–30 (Old Quarter)</span></li>
-      <li data-id="vn7"><div class="cb"></div><span class="cb-text">Book Hoi An Airbnb pool villa — Jan 1–4</span></li>
-      <li data-id="vn8"><div class="cb"></div><span class="cb-text">Book Ho Chi Minh City Airbnb — Jan 4–7 (District 1)</span></li>
-      <li data-id="vn9"><div class="cb"></div><span class="cb-text">Purchase travel insurance</span></li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><div class="ch-icon">🌙</div><h3>Halal Food Guide</h3></div>
-    <div class="tbl-wrap"><table class="tbl">
-      <thead><tr><th>City</th><th>Halal Availability</th><th>Tips</th></tr></thead>
-      <tbody>
-        <tr><td>Hanoi</td><td>Moderate</td><td>Muslim restaurants in Old Quarter. Fresh pho & banh mi often halal-friendly.</td></tr>
-        <tr><td>Ha Long Bay</td><td>Cruise-dependent</td><td>Inform cruise company of halal requirement when booking.</td></tr>
-        <tr><td>Hoi An</td><td>Good</td><td>Halal restaurants in An Hoi area. Grilled seafood widely safe.</td></tr>
-        <tr><td>Ho Chi Minh City</td><td>Best</td><td>District 1 has many halal & Indian restaurants. Best halal food in Vietnam.</td></tr>
-      </tbody>
-    </table></div>
-    <p style="font-size:.78rem; color:var(--muted); margin-top:12px;">Apps: <strong>Zabihah.com</strong> · <strong>HalalTrip app</strong> · Google Maps search "halal restaurant [city]"</p>
-  </div>
-
-</section>
-
 </main>
 
 <button id="scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -1574,6 +1794,11 @@
     if (link) link.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     closeSidebar();
+  }
+
+  function jumpTo(elId) {
+    const el = document.getElementById(elId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function toggleSidebar() {
@@ -1594,7 +1819,6 @@
     attire:   { list: 'cl-attire',   total: 8 },
     honeymoon:{ list: 'cl-honeymoon',total: 6 },
     legal:    { list: 'cl-legal',    total: 5 },
-    vietnam:  { list: 'cl-vietnam',  total: 9 },
   };
 
   function loadAll() {
