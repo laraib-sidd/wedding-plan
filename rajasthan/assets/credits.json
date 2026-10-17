@@ -1,0 +1,50 @@
+[
+  {
+    "id": "desert",
+    "file": "desert.jpg",
+    "title": "Sam Sand dunes.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Sam_Sand_dunes.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Sam_Sand_dunes.jpg/1920px-Sam_Sand_dunes.jpg",
+    "author": "Rohanguj2",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "changes": "Thumbnail resized by Wikimedia; CSS cropping in this site.",
+    "bytes": 141731
+  },
+  {
+    "id": "udaipur",
+    "file": "udaipur.jpg",
+    "title": "City Palace by lake Pichola, Udaipur.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:City_Palace_by_lake_Pichola,_Udaipur.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/City_Palace_by_lake_Pichola%2C_Udaipur.jpg/1920px-City_Palace_by_lake_Pichola%2C_Udaipur.jpg",
+    "author": "tommy",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "changes": "Thumbnail resized by Wikimedia; CSS cropping in this site.",
+    "bytes": 423793
+  },
+  {
+    "id": "jodhpur",
+    "file": "jodhpur.jpg",
+    "title": "Mehrangarh Fort.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Mehrangarh_Fort.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Mehrangarh_Fort.jpg/1920px-Mehrangarh_Fort.jpg",
+    "author": "Knowledge Seeker",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Mehrangarh_Fort.jpg",
+    "changes": "Thumbnail resized by Wikimedia; CSS cropping in this site.",
+    "bytes": 699527
+  },
+  {
+    "id": "jaisalmer",
+    "file": "jaisalmer.jpg",
+    "title": "Jaisalmer Fort, India.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Jaisalmer_Fort,_India.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Jaisalmer_Fort%2C_India.jpg/1920px-Jaisalmer_Fort%2C_India.jpg",
+    "author": "Clément Bardot",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "changes": "Thumbnail resized by Wikimedia; CSS cropping in this site.",
+    "bytes": 742839
+  }
+]
